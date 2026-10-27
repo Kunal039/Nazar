@@ -65,6 +65,7 @@
       ["(ਗੁਪਤ)", 0.6, "word"]
     ],
     4: [
+      ["\b((fd|fixed deposit|savings|investments?|mutual funds?|bank balance)( ki| ke| ka)? (details|detail|jaankari|jankari|statement))\b", 0.7],
       ["\\b(otp|aadhaar number|aadhar number|card number|cvv|pin number|upi pin|atm pin|password|verification code)\\b", 0.85],
       ["\\b(anydesk|teamviewer|screen ?share|remote access|quick ?support)\\b", 0.85],
       ["\\b(bank details|account details|account number)\\b", 0.55],
