@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <rect width="1200" height="300" rx="24" fill="#1E1612"/>
+  <text x="40" y="58" font-size="22" font-weight="700" fill="#F2C27A" letter-spacing="2">RESULTS ON 119 TEST CALLS</text>
+
+  <g text-anchor="middle">
+    <rect x="40" y="84" width="260" height="170" rx="18" fill="#163821" stroke="#2E7D32" stroke-width="2"/>
+    <text x="170" y="160" font-size="64" font-weight="700" fill="#8fd694" font-family="Cambria, Georgia, serif">54/54</text>
+    <text x="170" y="198" font-size="19" fill="#FFF8F0" font-weight="600">scam calls caught</text>
+    <text x="170" y="226" font-size="16" fill="#c7dcc7">all before money was asked</text>
+
+    <rect x="320" y="84" width="260" height="170" rx="18" fill="#163821" stroke="#2E7D32" stroke-width="2"/>
+    <text x="450" y="160" font-size="64" font-weight="700" fill="#8fd694" font-family="Cambria, Georgia, serif">57/58</text>
+    <text x="450" y="198" font-size="19" fill="#FFF8F0" font-weight="600">genuine calls stay quiet</text>
+    <text x="450" y="226" font-size="16" fill="#c7dcc7">incl. bank warnings, lawyers</text>
+
+    <rect x="600" y="84" width="260" height="170" rx="18" fill="#3a2d25" stroke="#C9962B" stroke-width="2"/>
+    <text x="730" y="160" font-size="64" font-weight="700" fill="#F2C27A" font-family="Cambria, Georgia, serif">0.7 s</text>
+    <text x="730" y="198" font-size="19" fill="#FFF8F0" font-weight="600">per sentence</text>
+    <text x="730" y="226" font-size="16" fill="#d9c7b5">Whisper on a laptop GPU</text>
+
+    <rect x="880" y="84" width="280" height="170" rx="18" fill="#3a2d25" stroke="#C9962B" stroke-width="2"/>
+    <text x="1020" y="160" font-size="64" font-weight="700" fill="#F2C27A" font-family="Cambria, Georgia, serif">3</text>
+    <text x="1020" y="198" font-size="19" fill="#FFF8F0" font-weight="600">languages</text>
+    <text x="1020" y="226" font-size="16" fill="#d9c7b5">Hindi · English · Punjabi</text>
+  </g>
+
+  <text x="40" y="282" font-size="15" fill="#a8968a">Test calls are fictional and written by our team, so these are not real-world accuracy numbers. Run them yourself: npm test</text>
+</svg>
