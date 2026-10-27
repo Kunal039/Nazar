@@ -50,6 +50,7 @@
     groups[c.kind].appendChild(o);
   });
   $("callPick").append(groups.scam, groups.genuine);
+  $("demoNote").textContent = `${CALLS.filter((c) => c.kind === "scam").length} scam and ${CALLS.filter((c) => c.kind !== "scam").length} genuine fictional calls written by the team in Hindi, Hinglish, English and Punjabi, some tricky on purpose.`;
   $("lang").value = store.get("lang", "hi-IN");
   $("lang").onchange = () => {
     store.set("lang", $("lang").value);
