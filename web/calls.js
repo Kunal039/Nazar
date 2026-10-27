@@ -363,7 +363,8 @@
     {id: "S49", set: "v4", kind: "scam", lang: "English", title: "Scam aimed at a student", moneyAt: 4, lines: ["This is the cyber crime cell. Your student loan account was used for illegal transfers.", "You will be arrested and your college will be informed.", "Do not tell your parents, stay on video until the inquiry is complete.", "Share your card number and CVV for verification.", "Pay the security deposit to clear your name."]},
     {id: "G37", set: "v4", kind: "genuine", lang: "English", title: "Teacher reports son missed exam", lines: ["Hello, I am calling from your son's school.", "He missed the exam today; is he unwell?", "Please send a leave application tomorrow."]},
     {id: "G38", set: "v4", kind: "genuine", lang: "Hindi", title: "पड़ोसी, पुलिस वेरिफिकेशन के लिए", lines: ["भाभी जी, आज पुलिस वाले किरायेदार की वेरिफिकेशन के लिए आए थे।", "आपके बारे में पूछ रहे थे, मैंने कहा शाम को आएंगी।", "कोई चिंता की बात नहीं है।"]},
-    {id: "G39", set: "v4", kind: "genuine", lang: "English", title: "Bank asks to visit branch for KYC", lines: ["Hello, this is your bank branch. Your KYC documents need updating.", "Please visit the branch with your Aadhaar and PAN card.", "We will never ask for your OTP or PIN on the phone."]}
+    {id: "G39", set: "v4", kind: "genuine", lang: "English", title: "Bank asks to visit branch for KYC", lines: ["Hello, this is your bank branch. Your KYC documents need updating.", "Please visit the branch with your Aadhaar and PAN card.", "We will never ask for your OTP or PIN on the phone."]},
+    {id: "G40", set: "v4", kind: "genuine", lang: "Hinglish", title: "Friend discusses a crime web series", lines: ["Yaar, kal raat wo web series dekhi, usme CBI officer ek gang ko arrest karta hai.", "Last episode mein drugs ka parcel pakda jata hai.", "Bahut mast thi, tu bhi dekh."]}
   ];
 
   if (typeof module !== "undefined" && module.exports) module.exports = { CALLS };
