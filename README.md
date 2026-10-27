@@ -98,6 +98,11 @@ Details: [scoring](docs/scoring.md) · [architecture](docs/architecture.md)
 
 ## 📊 Results
 
+<p align="center"><img src="docs/results.svg" alt="Results: 54/54 scam calls caught before money was asked, 57/58 genuine calls stay quiet, 0.7 seconds per sentence, 3 languages" width="100%"></p>
+
+<details>
+<summary><b>Details of each test</b></summary>
+
 | Test | Result |
 |---|---|
 | Digital-arrest scam calls (54, incl. Whisper-style transcripts) | **54/54 caught, all before money was asked for** |
@@ -106,6 +111,8 @@ Details: [scoring](docs/scoring.md) · [architecture](docs/architecture.md)
 | Speed (Whisper large-v3-turbo, laptop GPU) | **~0.7 s per sentence** |
 
 All test calls are fictional and written by our team, so these are not real-world accuracy numbers. Run them yourself with `npm test`.
+
+</details>
 
 ## 🔒 Privacy by design
 
