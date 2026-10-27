@@ -95,6 +95,11 @@
   }
 
   // Risk number counts up or down to its new value instead of jumping.
+  // Favicon turns red on danger, so the warning shows even from another tab.
+  function setFavicon(level) {
+    const iris = level === "danger" ? "%23C62828" : level === "warn" ? "%23C9962B" : "%23E0701B";
+    document.querySelector('link[rel="icon"]').href = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cellipse cx='32' cy='32' rx='30' ry='18' fill='%234A3B32'/%3E%3Ccircle cx='32' cy='32' r='12' fill='" + iris + "'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%231E1612'/%3E%3C/svg%3E";
+  }
   function countTo(el, to) {
     const from = Number(el.textContent) || 0;
     if (from === to || matchMedia("(prefers-reduced-motion: reduce)").matches) { el.textContent = to; return; }
@@ -106,6 +111,7 @@
   function update() {
     const r = session.score();
     countTo($("risk"), r.risk);
+    setFavicon(r.level);
     document.title = (r.level === "danger" ? "⚠ " : "") + (session.history.length ? r.risk + " · " : "") + "Nazar Scam Shield";
     $("level").textContent = LEVEL_TXT[r.level];
     $("level").dataset.level = r.level;
