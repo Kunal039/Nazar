@@ -195,7 +195,8 @@ Shareable demo moments: [`?call=S1&upto=3&alarm=1`](https://nazar-codevators.ver
 
 **Website version:** https://nazar-codevators.vercel.app, with sample calls, typed lines and browser speech (Chrome/Edge).
 
-**Tests:**
+<details>
+<summary><b>Run the tests</b></summary>
 
 ```bash
 npm test                          # detector, scoring, folding, listener and awareness tests
@@ -203,7 +204,10 @@ python server/test_cutter.py      # speech server sentence cutting
 node web/e2e_live.js demo-audio/S1_full.wav   # recorded call through Whisper (server running)
 ```
 
-## 🗂️ Repository
+</details>
+
+<details>
+<summary><b>🗂️ Repository layout</b></summary>
 
 ```
 web/          the page and the detector (runs in the browser and in Node)
@@ -212,6 +216,8 @@ demo-audio/   phone-quality demo calls
 stt-bench/    speech-to-text benchmark (Whisper sizes, CPU vs GPU)
 docs/         privacy, scoring, architecture, results, FAQ, presentation
 ```
+
+</details>
 
 ## 🧭 What was built when
 
