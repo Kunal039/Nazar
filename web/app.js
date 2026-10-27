@@ -353,6 +353,7 @@
   $("tgResend").onclick = () => sendTelegram($("family").textContent);
 
   // ---------- test bench ----------
+  $("benchBtn").textContent = `Run all ${CALLS.length} test calls`;
   $("benchBtn").onclick = () => {
     const tb = $("benchTable").querySelector("tbody");
     tb.innerHTML = "";
