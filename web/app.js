@@ -471,8 +471,7 @@
       "", "This report holds no recording and no transcript of the call."
     ];
     const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([lines.join("
-")], { type: "text/plain" }));
+    a.href = URL.createObjectURL(new Blob([lines.join("\n")], { type: "text/plain" }));
     a.download = "nazar-report-" + new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-") + ".txt";
     a.click(); URL.revokeObjectURL(a.href);
   };
