@@ -198,6 +198,12 @@
   }
   setInterval(() => forgetLines(MEMORY_MS), 5000);
 
+  // Alarm screen in the call language: heading, "I hung up", "I'm sure it's safe".
+  const ALARM_TXT = {
+    en: ["This looks like a scam", "I hung up", "I'm sure it's safe"],
+    hi: ["यह कॉल धोखाधड़ी लगती है", "मैंने फ़ोन काट दिया", "मुझे यकीन है, यह सुरक्षित है"],
+    pa: ["ਇਹ ਕਾਲ ਠੱਗੀ ਲੱਗਦੀ ਹੈ", "ਮੈਂ ਫ਼ੋਨ ਕੱਟ ਦਿੱਤਾ", "ਮੈਨੂੰ ਯਕੀਨ ਹੈ, ਇਹ ਸੁਰੱਖਿਅਤ ਹੈ"]
+  };
   function familyText(r) {
     const name = store.get("famName", "");
     const steps = r.stages.map((id) => STAGES[id - 1].name.toLowerCase()).join(", ");
@@ -218,6 +224,9 @@
     sendTelegram(msg);
     if (!dismissed) {
       $("ovRisk").textContent = "RISK " + r.risk + " / 100";
+      const t = ALARM_TXT[uiLang()] || ALARM_TXT.en;
+      $("ovTitle").textContent = t[0]; $("hangBtn").textContent = t[1]; $("safeBtn").textContent = t[2];
+      document.querySelector('#overlay p[lang="hi"]').hidden = uiLang() === "hi";   // heading already in Hindi
       $("overlay").classList.add("show");
       $("hangBtn").focus();
       speakWarning();
