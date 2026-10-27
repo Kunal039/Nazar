@@ -4,7 +4,7 @@
   "description": "Live scam-call detector for digital-arrest scams (Team CodeVators, Code Yudh 2026)",
   "private": true,
   "scripts": {
-    "test": "node web/test.js && node web/test_addressed.js && node web/test_fold.js && node web/test_score.js && node web/test_aware.js && node web/test_privacy.js",
+    "test": "node --check web/app.js && node --check web/sw.js && node web/test.js && node web/test_addressed.js && node web/test_fold.js && node web/test_score.js && node web/test_aware.js && node web/test_privacy.js",
     "e2e": "node web/e2e_live.js demo-audio/S1_full.wav",
     "serve": "python server/server.py"
   },
