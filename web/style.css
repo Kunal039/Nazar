@@ -170,3 +170,8 @@ header .badge { display: inline-block; margin-left: 8px; padding: 2px 10px; bord
 .tabs { border-bottom: 0; background: #f3e7da; padding: 4px; border-radius: 12px; gap: 4px; }
 .tab { flex: 1; border: 0; border-radius: 9px; padding: 8px 10px; font-weight: 600; color: var(--muted); }
 .tab.on { background: #fff; color: var(--dk); box-shadow: 0 1px 4px rgba(74,59,50,.18); border-bottom: 0; }
+
+/* Risk bar: coloured track shows where safe ends and danger starts */
+#bar { height: 12px; border: 0; border-radius: 999px; background: linear-gradient(90deg, #dcefdd 0 40%, #fbefd2 40% 70%, #f7ddd4 70%); }
+#fill { border-radius: 999px; }
+#bar .tick { width: 2px; background: var(--deep); }
