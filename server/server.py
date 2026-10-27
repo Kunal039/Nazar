@@ -68,7 +68,8 @@ class Cutter:
                 self.buf = np.concatenate([self.buf, f])
                 self.quiet = 0.0 if speech else self.quiet + FRAME / RATE
                 dur = len(self.buf) / RATE
-                if (self.quiet >= END_SILENCE and dur >= MIN_UTTER) or dur >= MAX_UTTER:
+                spoken = dur - self.quiet   # trailing pause is not speech
+                if (self.quiet >= END_SILENCE and spoken >= MIN_UTTER) or dur >= MAX_UTTER:
                     out.append(self.buf)
                     self.buf = np.zeros(0, np.float32)
                     self.quiet = 0.0
