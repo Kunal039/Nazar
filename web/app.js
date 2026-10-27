@@ -120,12 +120,13 @@
     return "The caller " + list + ".";
   }
   function countTo(el, to) {
+    const me = (el._anim = (el._anim || 0) + 1);   // a newer count cancels older ones
     const from = Number(el.textContent) || 0;
     if (from === to || matchMedia("(prefers-reduced-motion: reduce)").matches) { el.textContent = to; return; }
     const t0 = performance.now(), dur = 400;
-    const step = (t) => { const k = Math.min(1, (t - t0) / dur); el.textContent = Math.round(from + (to - from) * k); if (k < 1) requestAnimationFrame(step); };
+    const step = (t) => { if (me !== el._anim) return; const k = Math.min(1, (t - t0) / dur); el.textContent = Math.round(from + (to - from) * k); if (k < 1) requestAnimationFrame(step); };
     requestAnimationFrame(step);
-    setTimeout(() => { el.textContent = to; }, dur + 50);   // animation frames pause in hidden tabs
+    setTimeout(() => { if (me === el._anim) el.textContent = to; }, dur + 50);   // animation frames pause in hidden tabs
   }
   function update() {
     const r = session.score();
