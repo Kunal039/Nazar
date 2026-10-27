@@ -469,6 +469,21 @@
     store.set("waNum", wa);
     $("setupMsg").textContent = problems.length ? "Saved, but check: " + problems.join("; ") + "." : "Saved in this browser.";
   };
+  // Reads the chat id from the newest message sent to the bot, so nobody has to dig through getUpdates JSON.
+  $("findChat").onclick = async () => {
+    const tok = $("tgToken").value.trim();
+    if (!tok) { $("setupMsg").textContent = "Paste the bot token first."; return; }
+    $("setupMsg").textContent = "Looking for your message to the bot…";
+    try {
+      const j = await (await fetch("https://api.telegram.org/bot" + encodeURIComponent(tok) + "/getUpdates")).json();
+      if (!j.ok) { $("setupMsg").textContent = j.error_code === 401 ? "Telegram did not accept this token. Copy it again from @BotFather." : "Telegram said: " + (j.description || "error"); return; }
+      const msgs = j.result.map((u) => u.message || u.edited_message || u.channel_post).filter(Boolean);
+      if (!msgs.length) { $("setupMsg").textContent = "No message found. In Telegram, open your bot, press Start, send \"hi\", then press this button again."; return; }
+      const chat = msgs[msgs.length - 1].chat;
+      $("tgChat").value = chat.id;
+      $("setupMsg").textContent = "Found " + (chat.first_name || chat.title || "your chat") + " (" + chat.id + "). Press Save.";
+    } catch (e) { $("setupMsg").textContent = "Could not reach Telegram. Check the internet connection."; }
+  };
   $("testTg").onclick = () => {
     $("saveSetup").click();
     sendTelegram("Nazar test message: family alerts are working. You will get a message like this if a scam call is detected.", $("setupMsg"));
