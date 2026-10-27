@@ -300,6 +300,7 @@
   };
   function showPrivacy() {
     const local = useWhisper();
+    $("privSum").textContent = local ? "🔒 On-device · nothing recorded" : "⚠️ Cloud speech · audio leaves this device";
     $("privacy").innerHTML = (local ? "🔒 <b>On-device</b>: audio never leaves this device." : "⚠️ <b>Cloud speech</b>: audio goes to the browser's speech service.") +
       "<br>Call text is forgotten after 30 s; only scam phrases are kept. Everything is wiped when you stop listening." +
       "<br>Family alert holds only the risk level and steps seen, never what was said.";

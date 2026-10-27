@@ -111,3 +111,12 @@ button.mic::before { content: "\1F3A4"; margin-right: 8px; }
 button.mic.live::before { content: "\25A0"; }
 button.mic.live { animation: ring 1.6s infinite; }
 @keyframes ring { 0% { box-shadow: 0 0 0 0 rgba(139,46,22,.45); } 100% { box-shadow: 0 0 0 14px rgba(139,46,22,0); } }
+
+/* Live tab: one big action, details tucked away */
+.microw { align-items: center; gap: 14px; }
+button.link { background: none; border: none; color: var(--muted); text-decoration: underline; padding: 8px; margin-left: auto; }
+details.info { margin-top: 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--tint); padding: 8px 12px; }
+details.info summary { cursor: pointer; font-weight: 600; color: var(--green); list-style-position: inside; }
+details.info[open] summary { margin-bottom: 6px; }
+details.info .privacy { margin-top: 0; }
+label.small { font-size: 14px; color: var(--muted); display: flex; gap: 8px; align-items: center; }
