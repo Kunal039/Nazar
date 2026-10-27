@@ -433,8 +433,14 @@
   // ---------- setup ----------
   ["famName", "tgToken", "tgChat", "waNum"].forEach((k) => { $(k).value = store.get(k, ""); });
   $("saveSetup").onclick = () => {
-    ["famName", "tgToken", "tgChat", "waNum"].forEach((k) => store.set(k, $(k).value.trim()));
-    $("setupMsg").textContent = "Saved in this browser.";
+    const tok = $("tgToken").value.trim(), chat = $("tgChat").value.trim(), wa = $("waNum").value.replace(/\D/g, "");
+    const problems = [];
+    if (tok && !/^\d{6,}:[\w-]{30,}$/.test(tok)) problems.push("the bot token should look like 123456789:ABC... (from @BotFather)");
+    if (chat && !/^-?\d{5,}$/.test(chat)) problems.push("the chat id should be a number");
+    if (wa && (wa.length < 11 || wa.length > 13)) problems.push("the WhatsApp number needs the country code, e.g. 919876543210");
+    ["famName", "tgToken", "tgChat"].forEach((k) => store.set(k, $(k).value.trim()));
+    store.set("waNum", wa);
+    $("setupMsg").textContent = problems.length ? "Saved, but check: " + problems.join("; ") + "." : "Saved in this browser.";
   };
   $("testTg").onclick = () => {
     $("saveSetup").click();
