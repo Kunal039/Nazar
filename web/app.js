@@ -87,6 +87,7 @@
     const t0 = performance.now(), dur = 400;
     const step = (t) => { const k = Math.min(1, (t - t0) / dur); el.textContent = Math.round(from + (to - from) * k); if (k < 1) requestAnimationFrame(step); };
     requestAnimationFrame(step);
+    setTimeout(() => { el.textContent = to; }, dur + 50);   // animation frames pause in hidden tabs
   }
   function update() {
     const r = session.score();
