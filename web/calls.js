@@ -365,7 +365,8 @@
     {id: "G38", set: "v4", kind: "genuine", lang: "Hindi", title: "पड़ोसी, पुलिस वेरिफिकेशन के लिए", lines: ["भाभी जी, आज पुलिस वाले किरायेदार की वेरिफिकेशन के लिए आए थे।", "आपके बारे में पूछ रहे थे, मैंने कहा शाम को आएंगी।", "कोई चिंता की बात नहीं है।"]},
     {id: "G39", set: "v4", kind: "genuine", lang: "English", title: "Bank asks to visit branch for KYC", lines: ["Hello, this is your bank branch. Your KYC documents need updating.", "Please visit the branch with your Aadhaar and PAN card.", "We will never ask for your OTP or PIN on the phone."]},
     {id: "G40", set: "v4", kind: "genuine", lang: "Hinglish", title: "Friend discusses a crime web series", lines: ["Yaar, kal raat wo web series dekhi, usme CBI officer ek gang ko arrest karta hai.", "Last episode mein drugs ka parcel pakda jata hai.", "Bahut mast thi, tu bhi dekh."]},
-    {id: "G41", set: "v4", kind: "genuine", lang: "English", title: "Insurance agent renewal call", lines: ["Hi, this is your insurance advisor. Your health policy is due for renewal next week.", "You can pay online on the official website or at our office.", "Let me know if you have questions."]}
+    {id: "G41", set: "v4", kind: "genuine", lang: "English", title: "Insurance agent renewal call", lines: ["Hi, this is your insurance advisor. Your health policy is due for renewal next week.", "You can pay online on the official website or at our office.", "Let me know if you have questions."]},
+    {id: "G42", set: "v4", kind: "genuine", lang: "Punjabi (Gurmukhi)", title: "ਦੋਸਤ, ਕੋਰਟ ਦੀ ਤਾਰੀਖ਼", lines: ["ਯਾਰ, ਮੇਰੀ ਜ਼ਮੀਨ ਦੇ ਕੇਸ ਦੀ ਤਾਰੀਖ਼ ਕੱਲ੍ਹ ਕੋਰਟ ਵਿੱਚ ਹੈ।", "ਵਕੀਲ ਨੇ ਕਿਹਾ ਕਾਗਜ਼ ਲੈ ਕੇ ਆਉਣਾ।", "ਮੈਂ ਸ਼ਾਮ ਨੂੰ ਮਿਲਦਾ ਹਾਂ।"]}
   ];
 
   if (typeof module !== "undefined" && module.exports) module.exports = { CALLS };
