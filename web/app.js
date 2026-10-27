@@ -512,7 +512,10 @@
   if (pre) {
     document.querySelector('.tab[data-tab="demo"]').click();
     $("callPick").value = pre.id;
-    if (q.get("instant")) { dismissed = true; pre.lines.forEach(addLine); }
+    // Shareable demo moments: ?call=S1&upto=3 shows the first 3 lines; add &alarm=1 to show the alarm screen.
+    const upto = Number(q.get("upto")) || 0;
+    if (upto) $("intro").hidden = true;
+    if (q.get("instant") || upto) { dismissed = !q.get("alarm"); pre.lines.slice(0, upto || pre.lines.length).forEach(addLine); }
     else play(pre.id);
   }
   if (q.get("bench")) $("benchBtn").click();
