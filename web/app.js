@@ -472,7 +472,8 @@
     ];
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([lines.join("\n")], { type: "text/plain" }));
-    a.download = "nazar-report-" + new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-") + ".txt";
+    const d = new Date(), p2 = (n) => String(n).padStart(2, "0");
+    a.download = `nazar-report-${d.getFullYear()}-${p2(d.getMonth() + 1)}-${p2(d.getDate())}-${p2(d.getHours())}${p2(d.getMinutes())}.txt`;
     a.click(); URL.revokeObjectURL(a.href);
   };
   $("safeBtn").onclick = closeOverlay;
