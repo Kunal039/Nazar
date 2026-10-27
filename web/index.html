@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nazar Scam Shield</title>
+<meta name="description" content="Nazar scores a phone call for scam risk while it is still going on, warns the user and alerts family. Prototype by team CodeVators, Code Yudh.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cellipse cx='32' cy='32' rx='30' ry='18' fill='%234A3B32'/%3E%3Ccircle cx='32' cy='32' r='12' fill='%23E0701B'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%231E1612'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="wrap head">
+    <div>
+      <h1>Nazar <span>नज़र</span></h1>
+      <p>Stop the scam before the money moves. A live prototype by team CodeVators for Code Yudh.</p>
+    </div>
+    <label class="lang">Call language
+      <select id="lang">
+        <option value="hi-IN">Hindi / Hinglish</option>
+        <option value="en-IN">English (India)</option>
+        <option value="pa-IN">Punjabi</option>
+      </select>
+    </label>
+  </div>
+</header>
+
+<main class="wrap grid">
+  <section class="card">
+    <h2>The call</h2>
+    <div class="tabs" role="tablist">
+      <button role="tab" class="tab on" data-tab="live" aria-selected="true">Live microphone</button>
+      <button role="tab" class="tab" data-tab="demo" aria-selected="false">Sample calls</button>
+      <button role="tab" class="tab" data-tab="type" aria-selected="false">Type a line</button>
+    </div>
+
+    <div class="pane" id="pane-live">
+      <div class="btns">
+        <button class="primary" id="micBtn">Start listening</button>
+        <button id="resetLive">Clear</button>
+        <span id="micState" class="state">Microphone off</span>
+      </div>
+      <p class="note" id="micHelp">Put the phone call on speaker next to this laptop, or read a scam script aloud. Speech is turned into text by your browser's speech service (Chrome or Edge). Nazar's scoring runs here on this page.</p>
+      <div id="interim" class="interim" aria-live="polite"></div>
+    </div>
+
+    <div class="pane" id="pane-demo" hidden>
+      <div class="btns">
+        <select id="callPick" aria-label="Sample call"></select>
+        <button class="primary" id="playBtn">Play call</button>
+        <button id="stopBtn">Stop</button>
+      </div>
+      <p class="note">Fictional calls written by the team: 25 scam calls and 30 genuine ones in Hindi, Hinglish, English and Punjabi, some of them tricky on purpose. Each line can be read aloud too.</p>
+      <label class="check"><input type="checkbox" id="readAloud"> Read lines aloud while playing</label>
+    </div>
+
+    <div class="pane" id="pane-type" hidden>
+      <div class="add">
+        <input id="custom" placeholder="Type or paste a line, e.g. kisi ko mat batana" aria-label="Call line">
+        <button class="primary" id="addBtn">Add line</button>
+      </div>
+      <p class="note">English, Hinglish (Roman script) and Hindi (Devanagari) all work.</p>
+    </div>
+
+    <div id="transcript" aria-live="polite"><p class="empty">The call text appears here. Scored words are highlighted by step.</p></div>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section class="card">
+    <h2>Nazar's view</h2>
+    <div class="meter">
+      <div id="risk">0</div>
+      <div>
+        <div id="level">Safe</div>
+        <div class="sub">risk out of 100, alert at 70</div>
+      </div>
+    </div>
+    <div id="bar"><div id="fill"></div><div class="tick" style="left:70%"></div></div>
+    <svg id="spark" viewBox="0 0 300 70" preserveAspectRatio="none" aria-label="Risk after each line"></svg>
+    <div class="chips" id="chips"></div>
+    <h3>Why</h3>
+    <ul id="why"><li>No scam signals yet.</li></ul>
+    <h3>Family alert</h3>
+    <div id="family" class="family idle">Sent automatically when the risk reaches 70. It holds the risk level and the steps seen, never the call text.</div>
+    <div class="btns" id="familyActions" hidden>
+      <a id="waLink" class="btnlink" target="_blank" rel="noopener">Send on WhatsApp</a>
+      <button id="tgResend">Send on Telegram again</button>
+    </div>
+    <p class="note" id="tgStatus"></p>
+  </section>
+
+  <section class="card wide">
+    <details id="setup">
+      <summary>Family alert setup (Telegram and WhatsApp)</summary>
+      <div class="setup">
+        <p class="note">To get real Telegram alerts: create a bot with <b>@BotFather</b> and copy its token. Have the family member send any message to the bot, then open <code>https://api.telegram.org/bot&lt;token&gt;/getUpdates</code> to find their chat id. These settings are kept only in this browser.</p>
+        <label>Family member's name <input id="famName" placeholder="e.g. Rahul (son)"></label>
+        <label>Telegram bot token <input id="tgToken" placeholder="123456:ABC..." autocomplete="off"></label>
+        <label>Telegram chat id <input id="tgChat" placeholder="e.g. 987654321"></label>
+        <label>WhatsApp number with country code <input id="waNum" placeholder="e.g. 919876543210"></label>
+        <div class="btns"><button class="primary" id="saveSetup">Save</button><button id="testTg">Send a test message</button><span id="setupMsg" class="state"></span></div>
+      </div>
+    </details>
+  </section>
+
+  <section class="card wide">
+    <div class="benchhead">
+      <h2>Test bench</h2>
+      <button class="primary" id="benchBtn">Run all 55 test calls</button>
+    </div>
+    <p class="note">Runs every sample call through the same detector and checks two things: is each scam caught before the money is asked for, and does each genuine call stay below the alert line?</p>
+    <div id="benchSummary" class="stats" hidden></div>
+    <div class="tablewrap"><table id="benchTable" hidden>
+      <thead><tr><th>Call</th><th>Type</th><th>Language</th><th>Risk after each line</th><th>Result</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p><b>How the score works.</b> A digital-arrest scam moves through five steps: Authority, Fear, Isolation, Control, Transfer. Each step has a weight, and the score rises as more steps appear, more so when they come in that order. A genuine line such as "never share your OTP" does not count as a request for an OTP. Alert level is 70.</p>
+  <p><b>Honest limits.</b> This is a rule-based prototype tested on scripted calls written by our team, so the results above are not real-world accuracy. It can make mistakes; a family talking about a scam in the news gets a caution. Real phone-call audio on Android needs a dialer or telecom partner, so this demo listens through the laptop microphone.</p>
+</footer>
+
+<div id="overlay" role="alertdialog" aria-modal="true" aria-labelledby="ovTitle">
+  <div>
+    <div class="ovrisk" id="ovRisk">100</div>
+    <h2 id="ovTitle">This looks like a scam</h2>
+    <p lang="hi">सावधान! यह कॉल धोखाधड़ी लगती है।</p>
+    <p>Do not share your OTP. Do not send money. Hang up.</p>
+    <p class="small">Police, CBI and courts never arrest anyone on a video call. Report fraud at 1930.</p>
+    <div class="btns center">
+      <button id="hangBtn" class="white">I hung up</button>
+      <button id="safeBtn" class="ghost">I'm sure it's safe</button>
+    </div>
+  </div>
+</div>
+
+<script src="detector.js"></script>
+<script src="calls.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,312 @@
+// Nazar prototype page: live microphone, sample calls, typed lines, alerts and test bench.
+// Uses STAGES, THRESHOLD, Session (detector.js) and CALLS (calls.js).
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const session = new Session();
+  let alerted = false, dismissed = false, playTimer = null, playing = false;
+  const LEVEL_TXT = { safe: "Safe", warn: "Be careful", danger: "Likely scam" };
+  const LEVEL_COL = { safe: "#2E7D32", warn: "#9A6B0F", danger: "#8B2E16" };
+
+  // ---------- small helpers ----------
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem("nazar." + k); return v === null ? d : v; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem("nazar." + k, v); } catch (e) {} }
+  };
+  function esc(s) { return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+  function hindiUI() { return $("lang").value !== "en-IN"; }
+
+  // ---------- static bits ----------
+  STAGES.forEach((s) => {
+    const c = document.createElement("span");
+    c.className = "chip"; c.id = "chip" + s.id; c.textContent = s.id + " " + s.name;
+    $("chips").appendChild(c);
+    const l = document.createElement("span");
+    l.className = "s" + s.id; l.textContent = s.name;
+    $("legend").appendChild(l);
+  });
+  CALLS.forEach((c) => {
+    const o = document.createElement("option");
+    o.value = c.id; o.textContent = (c.kind === "scam" ? "Scam: " : "Genuine: ") + c.title + " (" + c.lang + ")";
+    $("callPick").appendChild(o);
+  });
+  $("lang").value = store.get("lang", "hi-IN");
+  $("lang").onchange = () => { store.set("lang", $("lang").value); if (rec) { stopMic(); startMic(); } };
+
+  // ---------- tabs ----------
+  document.querySelectorAll(".tab").forEach((t) => {
+    t.onclick = () => {
+      document.querySelectorAll(".tab").forEach((x) => { x.classList.toggle("on", x === t); x.setAttribute("aria-selected", x === t); });
+      ["live", "demo", "type"].forEach((n) => { $("pane-" + n).hidden = n !== t.dataset.tab; });
+    };
+  });
+
+  // ---------- transcript and score ----------
+  function renderLine(text, matches, genuine, risk) {
+    const empty = $("transcript").querySelector(".empty");
+    if (empty) empty.remove();
+    const ms = matches.slice().sort((a, b) => a.start - b.start);
+    let out = "", pos = 0;
+    for (const m of ms) {
+      if (m.start < pos) continue;
+      out += esc(text.slice(pos, m.start)) + '<mark class="s' + m.stage + '" title="' + STAGES[m.stage - 1].name + '">' + esc(text.slice(m.start, m.end)) + "</mark>";
+      pos = m.end;
+    }
+    out += esc(text.slice(pos));
+    const d = document.createElement("div");
+    d.className = "line" + (genuine ? " genuine" : "") + (risk >= THRESHOLD ? " hot" : "");
+    d.innerHTML = "<span>" + out + '</span><span class="r">risk ' + risk + "</span>";
+    $("transcript").appendChild(d);
+    $("transcript").scrollTop = $("transcript").scrollHeight;
+  }
+
+  function drawSpark() {
+    const h = session.history, W = 300, H = 70, pad = 6;
+    const y = (v) => H - pad - (v / 100) * (H - 2 * pad);
+    const n = Math.max(h.length, 2);
+    const x = (i) => pad + (i / (n - 1)) * (W - 2 * pad);
+    let svg = '<line x1="0" x2="' + W + '" y1="' + y(THRESHOLD) + '" y2="' + y(THRESHOLD) + '" stroke="#8B2E16" stroke-dasharray="4 4" stroke-width="1" vector-effect="non-scaling-stroke"/>';
+    if (h.length) {
+      const pts = h.map((v, i) => x(i) + "," + y(v)).join(" ");
+      svg += '<polyline points="' + pts + '" fill="none" stroke="#4A3B32" stroke-width="2.5" vector-effect="non-scaling-stroke"/>';
+    }
+    $("spark").innerHTML = svg;
+  }
+
+  function update() {
+    const r = session.score();
+    $("risk").textContent = r.risk;
+    $("level").textContent = LEVEL_TXT[r.level];
+    $("level").style.color = $("risk").style.color = LEVEL_COL[r.level];
+    $("fill").style.width = r.risk + "%";
+    $("fill").style.background = LEVEL_COL[r.level];
+    STAGES.forEach((s) => {
+      const on = r.stages.includes(s.id);
+      $("chip" + s.id).className = "chip" + (on ? " on" : "") + (on && s.id === 5 ? " last" : "");
+    });
+    const seen = {};
+    session.reasons.forEach((x) => { (seen[x.stage] = seen[x.stage] || new Set()).add(x.phrase); });
+    $("why").innerHTML = Object.keys(seen).map((k) => "<li><b>" + STAGES[k - 1].name + ":</b> " + esc([...seen[k]].join(", ")) + "</li>").join("") || "<li>No scam signals yet.</li>";
+    drawSpark();
+    if (r.level === "danger" && !alerted) raiseAlarm(r);
+  }
+
+  function addLine(text) {
+    text = String(text || "").trim(); if (!text) return;
+    const res = session.add(text);
+    renderLine(text, res.matches, res.genuine, session.score().risk);
+    update();
+  }
+
+  // ---------- warning ----------
+  let speakingWarning = false;
+  function say(text, lang, onend) {
+    try {
+      if (!("speechSynthesis" in window)) { onend && onend(); return; }
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = lang; u.rate = 0.95;
+      const v = speechSynthesis.getVoices().find((x) => x.lang && x.lang.replace("_", "-").toLowerCase().startsWith(lang.toLowerCase().slice(0, 2)));
+      if (v) u.voice = v;
+      u.onend = u.onerror = () => onend && onend();
+      speechSynthesis.speak(u);
+    } catch (e) { onend && onend(); }
+  }
+  function speakWarning() {
+    try { speechSynthesis.cancel(); } catch (e) {}
+    speakingWarning = true;
+    const en = () => say("Warning. This looks like a scam. Do not share your OTP. Do not send money. Hang up now.", "en-IN", () => { speakingWarning = false; });
+    if (hindiUI()) say("सावधान! यह कॉल धोखाधड़ी लगती है। अपना ओटीपी किसी को न बताएं। पैसे न भेजें। फ़ोन काट दें।", "hi-IN", en);
+    else en();
+  }
+
+  function familyText(r) {
+    const name = store.get("famName", "");
+    const steps = r.stages.map((id) => STAGES[id - 1].name.toLowerCase()).join(", ");
+    const t = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    return "Nazar alert: possible scam call right now" + (name ? " (for " + name + ")" : "") +
+      "\nRisk: HIGH (" + r.risk + "/100)\nSteps seen: " + steps + "\nTime: " + t +
+      "\nPlease call them now and tell them to hang up. Do not share any OTP.";
+  }
+
+  function raiseAlarm(r) {
+    alerted = true;
+    const msg = familyText(r);
+    $("family").textContent = msg;
+    $("family").className = "family sent";
+    $("familyActions").hidden = false;
+    const wa = store.get("waNum", "").replace(/\D/g, "");
+    $("waLink").href = "https://wa.me/" + wa + "?text=" + encodeURIComponent(msg);
+    sendTelegram(msg);
+    if (!dismissed) {
+      $("ovRisk").textContent = "RISK " + r.risk + " / 100";
+      $("overlay").classList.add("show");
+      $("hangBtn").focus();
+      speakWarning();
+      if (navigator.vibrate) navigator.vibrate([300, 150, 300, 150, 600]);
+    }
+  }
+
+  async function sendTelegram(msg, statusEl) {
+    const out = statusEl || $("tgStatus");
+    const token = store.get("tgToken", "").trim(), chat = store.get("tgChat", "").trim();
+    if (!token || !chat) { out.textContent = "Telegram is not set up yet, so the alert is shown here only. Open \"Family alert setup\" below to send it for real."; return false; }
+    out.textContent = "Sending Telegram alert...";
+    try {
+      // Form body keeps this a "simple" request: Telegram does not answer CORS preflights.
+      const res = await fetch("https://api.telegram.org/bot" + encodeURIComponent(token) + "/sendMessage", {
+        method: "POST", body: new URLSearchParams({ chat_id: chat, text: msg })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) { out.textContent = "Telegram alert sent at " + new Date().toLocaleTimeString() + "."; return true; }
+      out.textContent = "Telegram did not accept the alert: " + (data.description || res.status) + ". Check the token and chat id.";
+    } catch (e) {
+      out.textContent = "Could not reach Telegram (no internet?). The WhatsApp button still works.";
+    }
+    return false;
+  }
+
+  // ---------- reset ----------
+  function resetAll() {
+    stopPlay(); session.reset(); alerted = false; dismissed = false;
+    $("transcript").innerHTML = '<p class="empty">The call text appears here. Scored words are highlighted by step.</p>';
+    $("family").textContent = "Sent automatically when the risk reaches 70. It holds the risk level and the steps seen, never the call text.";
+    $("family").className = "family idle";
+    $("familyActions").hidden = true; $("tgStatus").textContent = "";
+    $("overlay").classList.remove("show");
+    $("interim").textContent = "";
+    try { speechSynthesis.cancel(); } catch (e) {}
+    update();
+  }
+
+  // ---------- live microphone ----------
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let rec = null, wantMic = false;
+  function setMicUI(on, text) {
+    $("micBtn").textContent = on ? "Stop listening" : "Start listening";
+    $("micBtn").classList.toggle("live", on);
+    $("micState").textContent = text || (on ? "Listening" : "Microphone off");
+    $("micState").classList.toggle("on", on);
+  }
+  function startMic() {
+    if (!SR) { $("micState").textContent = "Live speech needs Chrome or Edge. Use Sample calls or Type a line instead."; return; }
+    stopPlay();
+    wantMic = true;
+    rec = new SR();
+    rec.lang = $("lang").value; rec.continuous = true; rec.interimResults = true;
+    rec.onresult = (e) => {
+      let interim = "";
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const txt = e.results[i][0].transcript;
+        if (e.results[i].isFinal) { if (!speakingWarning) addLine(txt); }
+        else interim += txt;
+      }
+      $("interim").textContent = interim;
+    };
+    rec.onerror = (e) => {
+      if (e.error === "not-allowed" || e.error === "service-not-allowed") { wantMic = false; setMicUI(false, "Microphone permission was blocked. Allow it in the address bar and try again."); }
+      else if (e.error === "network") { wantMic = false; setMicUI(false, "Speech service needs an internet connection."); }
+      else if (e.error === "language-not-supported") { wantMic = false; setMicUI(false, "This browser cannot listen in that language. Try Hindi or English."); }
+    };
+    // Chrome stops after a pause in speech; keep going until the user presses Stop.
+    rec.onend = () => { if (wantMic) { try { rec.start(); } catch (e) { setMicUI(false); } } else setMicUI(false); };
+    try { rec.start(); setMicUI(true); } catch (e) { setMicUI(false, "Could not start the microphone."); }
+  }
+  function stopMic() { wantMic = false; if (rec) { try { rec.stop(); } catch (e) {} rec = null; } setMicUI(false); $("interim").textContent = ""; }
+  $("micBtn").onclick = () => (wantMic ? stopMic() : startMic());
+  $("resetLive").onclick = resetAll;
+  if (!SR) $("micHelp").textContent = "This browser has no speech recognition. Open the page in Chrome or Edge for live listening, or use Sample calls and Type a line.";
+
+  // ---------- sample calls ----------
+  function stopPlay() { playing = false; if (playTimer) { clearTimeout(playTimer); playTimer = null; } try { if (!speakingWarning) speechSynthesis.cancel(); } catch (e) {} }
+  function play(id) {
+    stopMic(); resetAll();
+    const call = CALLS.find((c) => c.id === id); if (!call) return;
+    playing = true;
+    let i = 0;
+    const text = call.lines.join("");
+    const lang = /[਀-੿]/.test(text) ? "pa-IN" : /[ऀ-ॿ]/.test(text) || /Hinglish|Punjabi/.test(call.lang) ? "hi-IN" : "en-IN";
+    (function next() {
+      if (!playing || i >= call.lines.length) { playing = false; return; }
+      addLine(call.lines[i++]);
+      if ($("readAloud").checked && !alerted) say(call.lines[i - 1], lang, () => { if (playing) playTimer = setTimeout(next, 400); });
+      else playTimer = setTimeout(next, 2000);
+    })();
+  }
+  $("playBtn").onclick = () => play($("callPick").value);
+  $("stopBtn").onclick = stopPlay;
+
+  // ---------- typed lines ----------
+  $("addBtn").onclick = () => { stopPlay(); addLine($("custom").value); $("custom").value = ""; $("custom").focus(); };
+  $("custom").addEventListener("keydown", (e) => { if (e.key === "Enter") $("addBtn").click(); });
+
+  // ---------- overlay ----------
+  function closeOverlay() { dismissed = true; $("overlay").classList.remove("show"); try { speechSynthesis.cancel(); } catch (e) {} speakingWarning = false; }
+  $("hangBtn").onclick = () => { closeOverlay(); stopMic(); stopPlay(); };
+  $("safeBtn").onclick = closeOverlay;
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && $("overlay").classList.contains("show")) closeOverlay(); });
+
+  // ---------- setup ----------
+  ["famName", "tgToken", "tgChat", "waNum"].forEach((k) => { $(k).value = store.get(k, ""); });
+  $("saveSetup").onclick = () => {
+    ["famName", "tgToken", "tgChat", "waNum"].forEach((k) => store.set(k, $(k).value.trim()));
+    $("setupMsg").textContent = "Saved in this browser.";
+  };
+  $("testTg").onclick = () => {
+    $("saveSetup").click();
+    sendTelegram("Nazar test message: family alerts are working. You will get a message like this if a scam call is detected.", $("setupMsg"));
+  };
+  $("tgResend").onclick = () => sendTelegram($("family").textContent);
+
+  // ---------- test bench ----------
+  $("benchBtn").onclick = () => {
+    const tb = $("benchTable").querySelector("tbody");
+    tb.innerHTML = "";
+    let scams = 0, caught = 0, early = 0, genuine = 0, falseAlarm = 0, caution = 0, other = 0, otherCaught = 0;
+    for (const c of CALLS) {
+      const s = new Session(); let alertAt = -1;
+      c.lines.forEach((l, i) => { s.add(l); if (alertAt < 0 && s.score().risk >= THRESHOLD) alertAt = i; });
+      const lvl = s.score().level;
+      let res, cls;
+      if (c.kind === "scam" && c.scope === "other") {
+        // Not a digital-arrest style scam: shown, but kept out of the headline numbers.
+        other++; if (alertAt >= 0) otherCaught++;
+        res = alertAt >= 0 ? "Caught (other scam type)" : "Missed: other scam type, outside Nazar's pattern"; cls = "mid";
+      } else if (c.kind === "scam") {
+        scams++;
+        if (alertAt >= 0) caught++;
+        if (alertAt >= 0 && alertAt < c.moneyAt) { early++; res = "Caught at line " + (alertAt + 1) + ", money asked at line " + (c.moneyAt + 1); cls = "ok"; }
+        else if (alertAt >= 0) { res = "Caught at the money ask"; cls = "mid"; }
+        else { res = "Missed"; cls = "bad"; }
+      } else {
+        genuine++;
+        if (lvl === "danger") { falseAlarm++; res = "False alarm"; cls = "bad"; }
+        else if (lvl === "warn") { caution++; res = "No alarm, caution shown"; cls = "mid"; }
+        else { res = "Stayed safe"; cls = "ok"; }
+      }
+      const tr = document.createElement("tr");
+      tr.innerHTML = "<td>" + esc(c.id + " " + c.title) + "</td><td>" + (c.kind === "scam" ? "Scam" : "Genuine") + "</td><td>" + esc(c.lang) +
+        '</td><td class="hist">' + s.history.join(" → ") + '</td><td class="' + cls + '">' + res + "</td>";
+      tb.appendChild(tr);
+    }
+    $("benchSummary").innerHTML =
+      '<div class="stat"><b>' + caught + "/" + scams + "</b><span>scam calls caught</span></div>" +
+      '<div class="stat"><b>' + early + "/" + scams + "</b><span>caught before money was asked for</span></div>" +
+      '<div class="stat"><b>' + falseAlarm + "/" + genuine + "</b><span>genuine calls with a false alarm</span></div>" +
+      '<div class="stat"><b>' + caution + "/" + genuine + "</b><span>genuine calls with a caution only</span></div>" +
+      (other ? '<div class="stat"><b>' + otherCaught + "/" + other + "</b><span>other scam types caught (lottery, fake relative...)</span></div>" : "");
+    $("benchSummary").hidden = false; $("benchTable").hidden = false;
+  };
+
+  try { speechSynthesis && speechSynthesis.getVoices(); } catch (e) {}
+  update();
+
+  // Shareable links: ?call=S1 plays a sample call, ?call=S1&instant=1 loads it at once (no warning screen).
+  const q = new URLSearchParams(location.search);
+  const pre = CALLS.find((c) => c.id === (q.get("call") || "").toUpperCase());
+  if (pre) {
+    document.querySelector('.tab[data-tab="demo"]').click();
+    $("callPick").value = pre.id;
+    if (q.get("instant")) { dismissed = true; pre.lines.forEach(addLine); }
+    else play(pre.id);
+  }
+  if (q.get("bench")) $("benchBtn").click();
+})();
