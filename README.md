@@ -23,7 +23,9 @@ cd web
 python -m http.server 8000
 ```
 
-Tests: `node web/test.js` (detector on 55 labelled calls: 25 scam, 30 genuine).
+Tests: `node web/test.js` (detector on 55 labelled calls: 25 scam, 30 genuine), `node web/test_addressed.js`, `python server/test_cutter.py`.
+
+Docs: [architecture](docs/architecture.md), [scoring](docs/scoring.md), [FAQ](docs/faq.md). One-click start on Windows: `start.bat`.
 
 ## On-device speech (no internet)
 
