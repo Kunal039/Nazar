@@ -106,6 +106,7 @@
   function update() {
     const r = session.score();
     countTo($("risk"), r.risk);
+    document.title = (r.level === "danger" ? "⚠ " : "") + (session.history.length ? r.risk + " · " : "") + "Nazar Scam Shield";
     $("level").textContent = LEVEL_TXT[r.level];
     $("level").dataset.level = r.level;
     $("level").style.color = $("risk").style.color = LEVEL_COL[r.level];
