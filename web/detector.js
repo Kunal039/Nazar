@@ -88,6 +88,7 @@
 
   // Genuine "never share your OTP" style warnings: do not count the OTP mention in that line.
   const GENUINE_SRC = "((do not|don't|never) (share|ask|disclose|tell)|share na (karein|kare|kijiye|karna|karo|kareyo)|saanjha na kar|kabhi (nahi|nahin) (poochh|maang)|kade (vi )?(nahi|nai) (puchh|mang)|never ask" +
+    "|(otp|code) (sirf |only )?(delivery|darwaze|door)|delivery (ke )?(time|samay|par|pe) (otp|code)|share (the )?otp only with (the )?delivery" +
     "|(शेयर|साझा) (न|ना|मत) कर|कभी (नहीं|नही) (पूछ|मांग|माँग)" +
     "|(ਸਾਂਝਾ|ਸ਼ੇਅਰ) (ਨਾ|ਨਹੀਂ|ਮਤ) ਕਰ|ਕਦੇ (ਵੀ )?(ਨਹੀਂ|ਨਾ) (ਪੁੱਛ|ਮੰਗ))";
 
