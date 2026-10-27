@@ -120,3 +120,8 @@ details.info summary { cursor: pointer; font-weight: 600; color: var(--green); l
 details.info[open] summary { margin-bottom: 6px; }
 details.info .privacy { margin-top: 0; }
 label.small { font-size: 14px; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+
+/* Accessibility: comfortable touch targets, calmer motion when asked */
+button, .btnlink, select { min-height: 44px; }
+.tab { min-height: 40px; }
+@media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } }

@@ -13,7 +13,7 @@
   <div class="wrap head">
     <div>
       <h1>Nazar <span>नज़र</span></h1>
-      <p>Stop the scam before the money moves. A live prototype by team CodeVators for Code Yudh.</p>
+      <p>Stop the scam before the money moves.</p>
     </div>
     <label class="lang">Call language
       <select id="lang">
@@ -76,9 +76,9 @@
   <section class="card">
     <h2>Nazar's view</h2>
     <div class="meter">
-      <div id="risk">0</div>
+      <div id="risk" aria-live="polite" aria-label="Risk score">0</div>
       <div>
-        <div id="level">Safe</div>
+        <div id="level" role="status">Safe</div>
         <div class="sub">risk out of 100, alert at 70</div>
       </div>
     </div>
