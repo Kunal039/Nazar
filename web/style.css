@@ -156,3 +156,7 @@ header { background: linear-gradient(135deg, var(--dk), var(--brown) 70%); box-s
 .line.hot { background: #fff6f3; }
 @keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 #transcript { background: #fdfaf6; }
+
+/* Friendly empty state */
+#transcript .empty { text-align: center; padding: 40px 12px; font-size: 15px; }
+#transcript .empty::before { content: "F3A7"; display: block; font-size: 34px; margin-bottom: 8px; }
