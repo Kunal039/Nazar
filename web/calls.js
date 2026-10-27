@@ -391,7 +391,8 @@
     {id: "S59", set: "v6", kind: "scam", lang: "Hindi (ASR-style)", title: "Whisper drops the officer title", moneyAt: 3, lines: ["मैं क्राइम ब्रांच से बोल रहा हूं आप पर केस दर्ज है", "आपका अरेस्ट वारंट निकल चुका है किसी को मत बताना", "फोन मत काटना", "सारे पैसे जांच के लिए ट्रांसफर करो"]},
     {id: "S60", set: "v6", kind: "scam", lang: "Hinglish (ASR-style)", title: "Roman Hinglish, no punctuation", moneyAt: 3, lines: ["main narcotics department se bol raha hoon", "aapke parcel mein drugs mile hain aap par fir hogi aur arrest hoga", "kisi ko mat batana call pe raho", "paise safe account mein transfer karo"]},
     {id: "S61", set: "v6", kind: "scam", lang: "English (ASR-style)", title: "Whisper hears 'see bee eye'", moneyAt: 3, lines: ["hello i am calling from the central bureau of investigation", "you are involved in a money laundering case and an arrest warrant is issued", "do not disconnect the call and do not tell your family", "pay the security deposit now"]},
-    {id: "G55", set: "v6", kind: "genuine", lang: "Hindi (ASR-style)", title: "Whisper-style: mother asks about dinner", lines: ["बेटा आज खाने में क्या बनाऊं", "पापा आज देर से आएंगे", "तुम दूध ले आना"]}
+    {id: "G55", set: "v6", kind: "genuine", lang: "Hindi (ASR-style)", title: "Whisper-style: mother asks about dinner", lines: ["बेटा आज खाने में क्या बनाऊं", "पापा आज देर से आएंगे", "तुम दूध ले आना"]},
+    {id: "G56", set: "v6", kind: "genuine", lang: "English (ASR-style)", title: "Whisper-style: bank fraud team blocks card", lines: ["hello this is the fraud team from your bank", "we blocked a suspicious transaction on your card", "we never ask for your otp please do not share it"]}
   ];
 
   if (typeof module !== "undefined" && module.exports) module.exports = { CALLS };
