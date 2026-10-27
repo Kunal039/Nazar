@@ -266,3 +266,10 @@ html.big body, html.big .line, html.big #why, html.big .family, html.big .note, 
 .after h2 { margin: 0 0 6px; color: var(--green); font-size: 20px; }
 .after ol { margin: 0 0 6px; padding-left: 22px; font-size: 15.5px; }
 @media (prefers-color-scheme: dark) { .after { background: #1f2e20; border-color: #2e4a30; } }
+
+/* Print: a clean report of the test bench and the current call (no buttons or alarm) */
+@media print {
+  header, .tabs, .btns, details, #intro, #after, .help, #overlay, .skip, kbd.hint { display: none !important; }
+  .card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+  body { background: #fff; color: #000; }
+}
