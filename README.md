@@ -11,6 +11,7 @@ Team: Kunal Mittal (lead), Ansh Kumar, Shivani Kumari. Code Yudh 2026 final, Cha
 |---|---|
 | `web/` detector, UI, sample calls, test bench | **Phase 1 online-round prototype** (our own Phase 1 submission, https://nazar-codevators.vercel.app), committed here as the starting point |
 | Pre-event research (speech-to-text speed benchmark) | Done before the event; scripts and results added later, marked as such |
+| `stt-bench/` speech-to-text benchmark (Whisper sizes, CPU vs GPU, phone-quality audio) | Pre-event research, committed as-is |
 | Live on-device speech server, alert flow, false-alarm fix, final integration | Built at the venue, 27–28 Oct 2026 (see commit history) |
 
 ## Run
@@ -23,6 +24,17 @@ python -m http.server 8000
 ```
 
 Tests: `node web/test.js` (detector on 55 labelled calls: 25 scam, 30 genuine).
+
+## On-device speech (no internet)
+
+```
+pip install -r server/requirements.txt
+python server/server.py            # large-v3-turbo on GPU; falls back to small on CPU
+```
+
+Open http://localhost:8000. The page detects the server and switches the mic to **On-device (Whisper)**:
+mic audio streams over a WebSocket to the laptop, is cut into sentences, transcribed (about 0.6 s per sentence on GPU), and scored. Audio never leaves the machine.
+Test without a mic: `python server/stream_test.py call_line1.wav call_line2.wav`.
 
 ## How detection works
 

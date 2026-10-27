@@ -1,0 +1,8 @@
+faster-whisper
+fastapi
+uvicorn[standard]
+numpy
+websockets
+# GPU (Windows/Linux, CUDA 12):
+nvidia-cublas-cu12
+nvidia-cudnn-cu12
