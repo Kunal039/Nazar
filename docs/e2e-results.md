@@ -13,3 +13,7 @@ Notes
 - Whisper misheard "drugs" (ड्रग्स → ग्रग) in S1 line 2, so the alarm came one sentence later than on the clean text; still before the money ask.
 - Whisper writes Punjabi partly in Devanagari; the detector folds both scripts, so the Punjabi call is still caught.
 - The language setting must match the call: G2 (English) run as Hindi gives garbled text (and no alarm).
+
+## Update (28 Oct, after adding Whisper-mishearing variants)
+S1 risk by sentence went from 28 → 28 → 65 → 100 to **28 → 58 → 65 → 100**: the caution now shows at sentence 2 instead of 3.
+The full alarm still comes at sentence 4 by design: Authority and Fear alone can reach at most 65; the alarm needs a third step (here Isolation, "don't tell anyone").
