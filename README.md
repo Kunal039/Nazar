@@ -73,16 +73,9 @@ Every one of these calls follows the same script. **Nazar recognises the script 
 
 ## ⚙️ How it works
 
-```mermaid
-flowchart LR
-    A["📞 Call on speaker"] --> B["🎙️ Browser mic<br/>16 kHz audio"]
-    B -- WebSocket --> C["🧠 Whisper large-v3-turbo<br/>on this laptop's GPU"]
-    C -- "text, ~0.7 s / sentence" --> D["🔎 Detector<br/>5-step scam script"]
-    D --> E{"Risk ≥ 70?"}
-    E -- no --> F["🟢 Safe / 🟡 Be careful"]
-    E -- yes --> G["🔴 Full-screen warning<br/>+ spoken alert"]
-    G --> H["📱 Family alert<br/>(no call text)"]
-```
+<p align="center">
+  <img src="docs/how-it-works.svg" alt="How it works: call on speaker, browser mic, Whisper on this laptop, detector; all inside a box marked stays on your device. If risk reaches 70, a full-screen spoken warning and a family alert with risk and steps only." width="100%">
+</p>
 
 Every digital-arrest call moves through five steps. Nazar scores each one as the call goes on:
 
