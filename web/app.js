@@ -417,6 +417,13 @@
   // ---------- overlay ----------
   // Esc closes the alarm screen ("I'm sure it's safe"), like any dialog.
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && $("overlay").classList.contains("show")) closeOverlay(); });
+  // Keep Tab inside the alarm screen while it is open.
+  $("overlay").addEventListener("keydown", (e) => {
+    if (e.key !== "Tab") return;
+    const f = [...$("overlay").querySelectorAll("button, a[href]")], first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
   function closeOverlay() { dismissed = true; $("overlay").classList.remove("show"); try { speechSynthesis.cancel(); } catch (e) {} speakingWarning = false; }
   $("hangBtn").onclick = () => { closeOverlay(); stopMic(); stopPlay(); $("after").hidden = false; $("after").scrollIntoView({ behavior: "smooth" }); };
   $("afterClose").onclick = () => { $("after").hidden = true; };
