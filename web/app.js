@@ -49,7 +49,7 @@
   $("lang").value = store.get("lang", "hi-IN");
   $("lang").onchange = () => {
     store.set("lang", $("lang").value);
-    setMicUI(wantMic, $("micState").textContent);
+    $("micBtn").textContent = (MIC_TXT[uiLang()] || MIC_TXT.en)[wantMic ? 1 : 0];
     if (rec) { stopMic(); startMic(); }
     // On-device mode: tell the speech server; no need to restart the mic.
     if (ws && ws.readyState === 1) ws.send("lang:" + $("lang").value.slice(0, 2));
@@ -363,6 +363,7 @@
     e.preventDefault(); $("micBtn").click();
   });
   $("micBtn").onclick = () => (wantMic ? stopListening() : (useWhisper() ? startWhisper() : startMic()));
+  $("micBtn").textContent = (MIC_TXT[uiLang()] || MIC_TXT.en)[0];
   $("engine").onchange = () => {
     if (wantMic) stopListening();
     if (!useWhisper() && !confirm("Browser speech sends the call audio to the browser's cloud speech service (Google for Chrome). On-device mode keeps audio on this device. Use cloud speech anyway?")) $("engine").value = "whisper";
