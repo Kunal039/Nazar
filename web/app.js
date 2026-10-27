@@ -205,6 +205,7 @@
   // ---------- live microphone ----------
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   let rec = null, wantMic = false;
+  let run = 0;   // bumps on every start/stop; async start steps from an older run give up
   function setMicUI(on, text) {
     $("micBtn").textContent = on ? "Stop listening" : "Start listening";
     $("micBtn").classList.toggle("live", on);
@@ -215,7 +216,7 @@
     if (!SR) { $("micState").textContent = "Live speech needs Chrome or Edge. Use Sample calls or Type a line instead."; return; }
     stopPlay();
     wantMic = true;
-    rec = new SR();
+    const r = (rec = new SR());
     rec.lang = $("lang").value; rec.continuous = true; rec.interimResults = true;
     rec.onresult = (e) => {
       let interim = "";
@@ -232,25 +233,41 @@
       else if (e.error === "language-not-supported") { wantMic = false; setMicUI(false, "This browser cannot listen in that language. Try Hindi or English."); }
     };
     // Chrome stops after a pause in speech; keep going until the user presses Stop.
-    rec.onend = () => { if (wantMic) { try { rec.start(); } catch (e) { setMicUI(false); } } else setMicUI(false); };
+    rec.onend = () => { if (r !== rec) return; if (wantMic) { try { r.start(); } catch (e) { stopListening(); } } else setMicUI(false); };
     try { rec.start(); setMicUI(true); } catch (e) { setMicUI(false, "Could not start the microphone."); }
   }
-  function stopMic() { forgetLines(0); wantMic = false; if (rec) { try { rec.stop(); } catch (e) {} rec = null; } setMicUI(false); $("interim").textContent = ""; }
+  // One stop for both engines: whatever is running or still starting is shut down.
+  function stopListening(msg) {
+    run++;
+    forgetLines(0);
+    wantMic = false;
+    if (rec) { const r = rec; rec = null; try { r.abort(); } catch (e) {} }
+    if (ws) { const w = ws; ws = null; try { w.close(); } catch (e) {} }
+    if (actx) { actx.close(); actx = null; }
+    if (micStream) { micStream.getTracks().forEach((t) => t.stop()); micStream = null; }
+    setMicUI(false, msg); $("interim").textContent = "";
+  }
+  const stopMic = stopListening;
   // ---------- on-device speech: mic audio to the local Whisper server (server/server.py) ----------
   let ws = null, actx = null, micStream = null;
   const useWhisper = () => $("engine").value === "whisper";
   async function startWhisper() {
     stopPlay();
     wantMic = true;
+    const me = ++run;
     setMicUI(true, "Connecting to the on-device speech server...");
+    let stream;
     try {
-      micStream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: true, autoGainControl: true } });
-    } catch (e) { wantMic = false; setMicUI(false, "Microphone permission was blocked. Allow it in the address bar and try again."); return; }
+      stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: true, autoGainControl: true } });
+    } catch (e) { if (me === run) stopListening("Microphone permission was blocked. Allow it in the address bar and try again."); return; }
+    if (me !== run) { stream.getTracks().forEach((t) => t.stop()); return; }   // Stop was pressed while waiting
+    micStream = stream;
     const proto = location.protocol === "https:" ? "wss" : "ws";
     const host = location.port === "8000" ? location.host : "localhost:8000";
     ws = new WebSocket(`${proto}://${host}/ws?lang=${encodeURIComponent($("lang").value)}`);
     ws.binaryType = "arraybuffer";
     ws.onopen = () => {
+      if (me !== run) return;
       actx = new AudioContext({ sampleRate: 16000 });
       const srcNode = actx.createMediaStreamSource(micStream);
       const proc = actx.createScriptProcessor(4096, 1, 1);
@@ -271,20 +288,12 @@
         if (m.text && !speakingWarning) addLine(m.text);
       }
     };
-    ws.onerror = () => { if (wantMic) { stopWhisper(); setMicUI(false, "No on-device speech server. Start it with: python server/server.py"); } };
-    ws.onclose = () => { if (wantMic) { stopWhisper(); setMicUI(false, "Speech server disconnected."); } };
+    ws.onerror = () => { if (me === run) stopListening("No on-device speech server. Double-click start.bat, then try again."); };
+    ws.onclose = () => { if (me === run) stopListening("Speech server disconnected."); };
   }
-  function stopWhisper() {
-    forgetLines(0);
-    wantMic = false;
-    if (ws) { const w = ws; ws = null; try { w.close(); } catch (e) {} }
-    if (actx) { actx.close(); actx = null; }
-    if (micStream) { micStream.getTracks().forEach((t) => t.stop()); micStream = null; }
-    setMicUI(false); $("interim").textContent = "";
-  }
-  $("micBtn").onclick = () => (wantMic ? (ws || micStream ? stopWhisper() : stopMic()) : (useWhisper() ? startWhisper() : startMic()));
+  $("micBtn").onclick = () => (wantMic ? stopListening() : (useWhisper() ? startWhisper() : startMic()));
   $("engine").onchange = () => {
-    if (wantMic) { ws || micStream ? stopWhisper() : stopMic(); }
+    if (wantMic) stopListening();
     if (!useWhisper() && !confirm("Browser speech sends the call audio to the browser's cloud speech service (Google for Chrome). On-device mode keeps audio on this device. Use cloud speech anyway?")) $("engine").value = "whisper";
     showPrivacy();
   };
