@@ -31,6 +31,7 @@
       ["(ਬੈਂਕ)", 0.25]
     ],
     2: [
+      ["((not|no) (a |an )?(scam|fraud|fake)( call)?|(koi |ye |yeh )?(scam|fraud|fake)( call)? (nahi|nahin|nai) (hai|he)|(ठगी|धोखा|फ्रॉड|स्कैम)( कॉल)? (नहीं|नही) है)", 0.5],
       ["(ग्रग|ड्रक|ड्राग|वोरेंट|वॉरेंट|वारेंट|गरिबतार|गिरबतार|पारसर|पार्सर)", 0.6],
       ["\\b(arrest warrant|digital arrest)\\b", 0.95],
       ["\\b(giraftar|griftar|gira?ftaar|griftaar|arrest|arrested|warrant)\\b", 0.8],
