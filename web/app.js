@@ -381,6 +381,13 @@
   // Served by the local speech server? Then default to on-device speech.
   $("engine").value = "whisper"; showPrivacy();
   fetch("/health").then((r) => r.ok && r.json()).then((h) => { if (h && h.ok) { $("engine").value = "whisper"; $("micHelp").textContent = `On-device speech: ${h.model} on ${h.device.toUpperCase()}. Audio never leaves this laptop. Put the call on speaker next to it.`; } }).catch(() => {});
+  // Hosted website (no local speech server): explain the choice instead of failing on the first click.
+  fetch("/health").then((r) => { if (!r.ok) throw 0; }).catch(() => {
+    if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) return;
+    $("micHelp").textContent = "On-device speech runs in the Nazar app on a laptop (start.bat). On this website, choose \"Browser speech (cloud)\" below to use the mic, or try Sample calls.";
+    $("privSum").textContent = "🌐 Website demo · pick a speech engine";
+    document.querySelector("details.info").open = true;
+  });
   $("resetLive").onclick = resetAll;
   if (!SR) $("micHelp").textContent = "This browser has no speech recognition. Open the page in Chrome or Edge for live listening, or use Sample calls and Type a line.";
 
