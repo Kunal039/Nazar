@@ -378,6 +378,11 @@
     sendTelegram("Nazar test message: family alerts are working. You will get a message like this if a scam call is detected.", $("setupMsg"));
   };
   $("tgResend").onclick = () => sendTelegram($("family").textContent);
+  $("copyAlert").onclick = async () => {
+    try { await navigator.clipboard.writeText($("family").textContent); $("copyAlert").textContent = "Copied ✓"; }
+    catch (e) { $("copyAlert").textContent = "Copy failed"; }
+    setTimeout(() => { $("copyAlert").textContent = "Copy message"; }, 1500);
+  };
 
   // ---------- test bench ----------
   $("benchBtn").textContent = `Run all ${CALLS.length} test calls`;
