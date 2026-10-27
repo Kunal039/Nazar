@@ -151,6 +151,9 @@
   // is not running one (bank warnings, cyber-cell follow-ups, reporters, family retelling a scam call).
   const AWARE_SRC = "(1930|scams?|thagi|thugi|ठगी|ठग|धोखा|ਠੱਗੀ|ਧੋਖਾ|dhokha|report (it|kariye|karein|karo|kar do)|शिकायत|ਸ਼ਿਕਾਇਤ)";
   const AWARE = new RegExp(WORD_START + "(?:" + fold(AWARE_SRC).t + ")", "iu");
+  // "This is not a scam" is a classic scammer line, not awareness: it must not switch off the alarm.
+  const DENIAL_SRC = "((not|no) (a |an )?(fraud |scam |fake )?(scam|fraud|fake)|(koi |ye |yeh )?(scam|fraud|thagi|dhokha|fake)( call)? (nahi|nahin|nai)|(ठगी|धोखा|फ्रॉड|स्कैम)( कॉल)? (नहीं|नही)|(ਠੱਗੀ|ਧੋਖਾ)( ਕਾਲ)? (ਨਹੀਂ|ਨਹੀ))";
+  const DENIAL = new RegExp(WORD_START + "(?:" + fold(DENIAL_SRC).t + ")", "iu");
   const AWARE_CAP = 69;
 
   function analyzeLine(text) {
@@ -172,7 +175,7 @@
         }
       }
     }
-    return { matches, genuine, addressed: YOU.test(t), aware: AWARE.test(t) };
+    return { matches, genuine, addressed: YOU.test(t), aware: AWARE.test(t) && !DENIAL.test(t) };
   }
 
   class Session {
