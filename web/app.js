@@ -80,9 +80,17 @@
     $("spark").innerHTML = svg;
   }
 
+  // Risk number counts up or down to its new value instead of jumping.
+  function countTo(el, to) {
+    const from = Number(el.textContent) || 0;
+    if (from === to || matchMedia("(prefers-reduced-motion: reduce)").matches) { el.textContent = to; return; }
+    const t0 = performance.now(), dur = 400;
+    const step = (t) => { const k = Math.min(1, (t - t0) / dur); el.textContent = Math.round(from + (to - from) * k); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
   function update() {
     const r = session.score();
-    $("risk").textContent = r.risk;
+    countTo($("risk"), r.risk);
     $("level").textContent = LEVEL_TXT[r.level];
     $("level").dataset.level = r.level;
     $("level").style.color = $("risk").style.color = LEVEL_COL[r.level];
