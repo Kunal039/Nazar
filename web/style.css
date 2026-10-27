@@ -252,3 +252,5 @@ kbd.hint { font: 12px/1 inherit; color: var(--muted); border: 1px solid var(--li
 tr:has(td.bad) { background: #fbe6e0; }
 tr:has(td.ok) td.ok { color: var(--green); font-weight: 600; }
 @media (prefers-color-scheme: dark) { tr:has(td.bad) { background: #3d2219; } }
+
+.intro button.link { white-space: nowrap; }
