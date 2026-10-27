@@ -141,12 +141,44 @@ More: [PRIVACY.md](PRIVACY.md) · technical notes in [docs/privacy.md](docs/priv
 
 ## ✨ Features
 
-- 🎙️ **One big button** to start listening (or press Space), with a live loudness bar and call timer
-- 💍 **Risk ring**, step tracker and a plain sentence: *"The caller claims to be an officer and is making threats."*
-- 🔴 **Full-screen spoken warning** in Hindi or English, then **what to do next** (1930, cybercrime.gov.in)
-- 📱 **Family alert** via WhatsApp, Telegram, copy or share, without any call text
-- 🌐 Hindi, English, Hinglish and Punjabi · **A+ large text** · **dark mode** · screen-reader friendly
-- 📲 **Installable app**, works offline · 🧪 built-in **test bench** with 119 calls
+<table>
+<tr>
+<td width="50%" valign="top">
+
+**🎙️ Easy to use**
+- One big button (or Space bar), live loudness bar and call timer
+- Mic button and alarm speak Hindi, Punjabi or English
+- **A+** large text for older users
+
+</td>
+<td width="50%" valign="top">
+
+**🔴 Warns in time**
+- Full-screen alarm, spoken aloud, before money is asked
+- Plain reason: *"The caller claims to be an officer and is making threats."*
+- What to do next: hang up, 1930, cybercrime.gov.in
+
+</td>
+</tr>
+<tr>
+<td valign="top">
+
+**👨‍👩‍👧 Brings in family**
+- Alert by WhatsApp, Telegram, copy or share
+- One-button Telegram setup
+- Never includes what was said
+
+</td>
+<td valign="top">
+
+**🔒 Private and reliable**
+- On-device speech, works with Wi-Fi off
+- Reconnects if the speech server drops
+- Installable app, dark mode, screen-reader friendly
+
+</td>
+</tr>
+</table>
 
 ## 🚀 Quick start
 
