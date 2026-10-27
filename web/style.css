@@ -224,3 +224,7 @@ kbd.hint { font: 12px/1 inherit; color: var(--muted); border: 1px solid var(--li
   mark, .legend span, #why .dot { color: #1E1612; }
   .help a { color: #F2C27A; }
 }
+@media (prefers-color-scheme: dark) {
+  h2, h3, .card h2, .card h3 { color: #f6ebe0; }
+  header { background: linear-gradient(135deg, #1E1612, #4A3B32 70%); }
+}
