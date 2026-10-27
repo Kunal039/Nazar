@@ -107,7 +107,7 @@ footer { font-size: 13.5px; color: var(--muted); padding-bottom: 30px; }
 
 /* Large mic button: the one thing to press */
 button.mic { font-size: 18px; font-weight: 600; padding: 14px 28px; border-radius: 999px; min-height: 52px; box-shadow: 0 2px 8px rgba(74,59,50,.25); }
-button.mic::before { content: "F399\FE0F"; margin-right: 8px; }
-button.mic.live::before { content: "A0"; }
+button.mic::before { content: "\1F3A4"; margin-right: 8px; }
+button.mic.live::before { content: "\25A0"; }
 button.mic.live { animation: ring 1.6s infinite; }
 @keyframes ring { 0% { box-shadow: 0 0 0 0 rgba(139,46,22,.45); } 100% { box-shadow: 0 0 0 14px rgba(139,46,22,0); } }
