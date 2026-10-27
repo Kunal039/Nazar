@@ -212,3 +212,15 @@ kbd.hint { font: 12px/1 inherit; color: var(--muted); border: 1px solid var(--li
 /* Legend under the transcript matches the step tracker */
 .legend { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 .legend span { border-radius: 999px; padding: 3px 10px; font-size: 12.5px; border: 1px solid rgba(0,0,0,.08); }
+
+/* Dark mode: same brown and orange palette, darker surfaces */
+@media (prefers-color-scheme: dark) {
+  :root { --tint: #2a201b; --line: #4a3b32; --muted: #c9b6a4; --bg: #1a1310; --dk: #f6ebe0; }
+  body { background: var(--bg); color: var(--dk); }
+  .card, details.info { background: var(--tint); }
+  #transcript, .line, .family, #spark, select, input, textarea, button:not(.primary):not(.link), .chip, .ring #risk, kbd.hint { background: #33271f; color: var(--dk); }
+  .tabs { background: #33271f; } .tab.on { background: #4a3b32; color: #fff; }
+  .line.hot, .family.sent { background: #3d2219; }
+  mark, .legend span, #why .dot { color: #1E1612; }
+  .help a { color: #F2C27A; }
+}
