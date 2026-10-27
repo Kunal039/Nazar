@@ -405,7 +405,8 @@
 
   // ---------- overlay ----------
   function closeOverlay() { dismissed = true; $("overlay").classList.remove("show"); try { speechSynthesis.cancel(); } catch (e) {} speakingWarning = false; }
-  $("hangBtn").onclick = () => { closeOverlay(); stopMic(); stopPlay(); };
+  $("hangBtn").onclick = () => { closeOverlay(); stopMic(); stopPlay(); $("after").hidden = false; $("after").scrollIntoView({ behavior: "smooth" }); };
+  $("afterClose").onclick = () => { $("after").hidden = true; };
   $("safeBtn").onclick = closeOverlay;
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && $("overlay").classList.contains("show")) closeOverlay(); });
 

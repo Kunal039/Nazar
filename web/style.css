@@ -260,3 +260,9 @@ button.atext { background: transparent; color: #F2C27A; border: 1px solid rgba(2
 button.atext[aria-pressed="true"] { background: #F2C27A; color: var(--dk); }
 html.big { font-size: 118%; }
 html.big body, html.big .line, html.big #why, html.big .family, html.big .note, html.big button { font-size: 1.12em; }
+
+/* After hanging up: what to do next */
+.after { margin-top: 16px; background: #eef7ee; border: 1px solid #cfe6d0; border-left: 5px solid var(--green); border-radius: 12px; padding: 12px 18px; }
+.after h2 { margin: 0 0 6px; color: var(--green); font-size: 20px; }
+.after ol { margin: 0 0 6px; padding-left: 22px; font-size: 15.5px; }
+@media (prefers-color-scheme: dark) { .after { background: #1f2e20; border-color: #2e4a30; } }
