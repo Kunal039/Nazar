@@ -143,7 +143,7 @@ button, .btnlink, select { min-height: 44px; }
 /* Five scam steps as a tracker that lights up */
 .chips { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin: 10px 0; }
 .chip { border-radius: 10px; text-align: center; font-size: 12.5px; padding: 9px 4px; line-height: 1.2; transition: background .3s, color .3s; }
-.chip.on::before { content: "¹3  "; font-weight: bold; }
+.chip.on::before { content: "\2713  "; font-weight: bold; }
 @media (max-width: 420px) { .chip { font-size: 11px; padding: 8px 2px; } }
 
 /* Softer cards, richer header */
@@ -159,4 +159,4 @@ header { background: linear-gradient(135deg, var(--dk), var(--brown) 70%); box-s
 
 /* Friendly empty state */
 #transcript .empty { text-align: center; padding: 40px 12px; font-size: 15px; }
-#transcript .empty::before { content: "F3A7"; display: block; font-size: 34px; margin-bottom: 8px; }
+#transcript .empty::before { content: "\1F3A7"; display: block; font-size: 34px; margin-bottom: 8px; }
