@@ -85,6 +85,8 @@
     $("level").textContent = LEVEL_TXT[r.level];
     $("level").style.color = $("risk").style.color = LEVEL_COL[r.level];
     $("fill").style.width = r.risk + "%";
+    $("ring").style.setProperty("--p", r.risk);
+    $("ring").style.setProperty("--c", LEVEL_COL[r.level]);
     $("fill").style.background = LEVEL_COL[r.level];
     STAGES.forEach((s) => {
       const on = r.stages.includes(s.id);
