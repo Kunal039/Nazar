@@ -96,6 +96,8 @@ async def ws(sock: WebSocket):
                     async with model_lock:
                         text = await asyncio.to_thread(transcribe, utt, lang)
                     ms = int((time.perf_counter() - t0) * 1000)
+                    # Timing only; the call text is never logged.
+                    print(f"sentence: {len(utt) / RATE:.1f}s audio, {ms} ms, lang={lang}", flush=True)
                     await sock.send_json({"type": "final", "text": text, "ms": ms, "sec": round(len(utt) / RATE, 1)})
             elif msg.get("text"):
                 if msg["text"].startswith("lang:"):
