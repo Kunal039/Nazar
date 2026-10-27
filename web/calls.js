@@ -369,7 +369,8 @@
     {id: "G42", set: "v4", kind: "genuine", lang: "Punjabi (Gurmukhi)", title: "ਦੋਸਤ, ਕੋਰਟ ਦੀ ਤਾਰੀਖ਼", lines: ["ਯਾਰ, ਮੇਰੀ ਜ਼ਮੀਨ ਦੇ ਕੇਸ ਦੀ ਤਾਰੀਖ਼ ਕੱਲ੍ਹ ਕੋਰਟ ਵਿੱਚ ਹੈ।", "ਵਕੀਲ ਨੇ ਕਿਹਾ ਕਾਗਜ਼ ਲੈ ਕੇ ਆਉਣਾ।", "ਮੈਂ ਸ਼ਾਮ ਨੂੰ ਮਿਲਦਾ ਹਾਂ।"]},
     {id: "G43", set: "v4", kind: "genuine", lang: "English", title: "Real police: stolen phone recovered", lines: ["Hello, I am calling from the police station. We recovered your stolen phone.", "Please come to the station with the purchase bill to collect it.", "There is no charge."]},
     {id: "G44", set: "v4", kind: "genuine", lang: "Hinglish", title: "Mother asks son to pay electricity bill", lines: ["Beta, bijli ka bill aaj last date hai.", "Tu online bhar de, main tujhe paise de dungi.", "Aur shaam ko sabzi bhi le aana."]},
-    {id: "G45", set: "v4", kind: "genuine", lang: "English", title: "Customer care confirms card block request", lines: ["Hello, this is card customer care. You asked us to block your lost card.", "The card is now blocked and a new one will be sent to your address.", "Do not share your card details with anyone who calls you."]}
+    {id: "G45", set: "v4", kind: "genuine", lang: "English", title: "Customer care confirms card block request", lines: ["Hello, this is card customer care. You asked us to block your lost card.", "The card is now blocked and a new one will be sent to your address.", "Do not share your card details with anyone who calls you."]},
+    {id: "G46", set: "v4", kind: "genuine", lang: "Hindi", title: "दादा जी समाचार सुनाते हैं", lines: ["बेटा, आज अख़बार में खबर थी कि सीबीआई के नाम पर ठगी हो रही है।", "लोग गिरफ्तारी की धमकी देकर पैसे मांगते हैं।", "हमें सावधान रहना चाहिए।"]}
   ];
 
   if (typeof module !== "undefined" && module.exports) module.exports = { CALLS };
