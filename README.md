@@ -27,7 +27,7 @@ cd web
 python -m http.server 8000
 ```
 
-Tests: `node web/test.js` (detector on 55 labelled calls: 25 scam, 30 genuine), `node web/test_addressed.js`, `python server/test_cutter.py`.
+Tests: `node web/test.js` (detector on 71 labelled calls: 35 scam, 36 genuine), `node web/test_addressed.js`, `node web/test_fold.js`, `node web/test_score.js`, `python server/test_cutter.py`; end to end through Whisper: `node web/e2e_live.js demo-audio/S1_full.wav`.
 
 Docs: [privacy](docs/privacy.md), [architecture](docs/architecture.md), [scoring](docs/scoring.md), [FAQ](docs/faq.md). One-click start on Windows: `start.bat`.
 
@@ -51,5 +51,5 @@ Test without a mic: `python server/stream_test.py call_line1.wav call_line2.wav`
 
 ## Known limits
 
-- Fixed at the venue: G22 (a TV news report about a scam racket) was a false alarm. Threats now count only once the caller addresses the listener ("you", aap, tusi, ਤੁਸੀਂ); a call that only talks about other people stays below the alarm. Result: 22/22 scams caught before the money ask, 0/30 false alarms.
+- Fixed at the venue: G22 (a TV news report about a scam racket) was a false alarm. Threats now count only once the caller addresses the listener ("you", aap, tusi, ਤੁਸੀਂ); a call that only talks about other people stays below the alarm. Result now: 32/32 in-scope scams caught before the money ask, 0/36 false alarms.
 - Browser speech recognition needs internet; the on-device Whisper server removes that need.
