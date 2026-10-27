@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="pbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f2a17"/>
+      <stop offset="1" stop-color="#1E1612"/>
+    </linearGradient>
+    <linearGradient id="lock" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8fd694"/>
+      <stop offset="1" stop-color="#2E7D32"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="420" rx="24" fill="url(#pbg)"/>
+  <rect x="2" y="2" width="1196" height="416" rx="23" fill="none" stroke="#2E7D32" stroke-width="3"/>
+
+  <!-- lock -->
+  <g transform="translate(70 70)">
+    <path d="M30 70 V48 a50 50 0 0 1 100 0 V70" fill="none" stroke="#8fd694" stroke-width="16" stroke-linecap="round"/>
+    <rect x="0" y="66" width="160" height="124" rx="20" fill="url(#lock)"/>
+    <circle cx="80" cy="118" r="16" fill="#0f2a17"/>
+    <rect x="73" y="124" width="14" height="36" rx="6" fill="#0f2a17"/>
+  </g>
+
+  <text x="270" y="105" font-size="22" font-weight="700" fill="#8fd694" letter-spacing="3">PRIVACY FIRST</text>
+  <text x="270" y="160" font-size="52" font-weight="700" fill="#FFF8F0" font-family="Cambria, Georgia, serif">Your call stays on your device.</text>
+  <text x="270" y="200" font-size="24" fill="#d9e8d9">Nazar is a smoke detector, not a recorder.</text>
+
+  <!-- four promises -->
+  <g font-size="19" fill="#FFF8F0">
+    <rect x="270" y="236" width="205" height="112" rx="16" fill="#163821" stroke="#2E7D32"/>
+    <text x="292" y="276" font-size="28">🎙️</text>
+    <text x="292" y="308" font-weight="700">Never leaves</text>
+    <text x="292" y="332" fill="#c7dcc7" font-size="16">your device</text>
+
+    <rect x="490" y="236" width="205" height="112" rx="16" fill="#163821" stroke="#2E7D32"/>
+    <text x="512" y="276" font-size="28">💾</text>
+    <text x="512" y="308" font-weight="700">Never recorded</text>
+    <text x="512" y="332" fill="#c7dcc7" font-size="16">no audio, no transcript</text>
+
+    <rect x="710" y="236" width="205" height="112" rx="16" fill="#163821" stroke="#2E7D32"/>
+    <text x="732" y="276" font-size="28">⏱️</text>
+    <text x="732" y="308" font-weight="700">Forgotten in 30 s</text>
+    <text x="732" y="332" fill="#c7dcc7" font-size="16">wiped when you stop</text>
+
+    <rect x="930" y="236" width="205" height="112" rx="16" fill="#163821" stroke="#2E7D32"/>
+    <text x="952" y="276" font-size="28">👨‍👩‍👧</text>
+    <text x="952" y="308" font-weight="700">Family gets the</text>
+    <text x="952" y="332" fill="#c7dcc7" font-size="16">warning, not the words</text>
+  </g>
+
+  <text x="270" y="388" font-size="18" fill="#8fd694">✓ Checked by automated privacy tests on every change   ·   No account · No ads · No tracking</text>
+</svg>
