@@ -55,6 +55,8 @@
     const d = document.createElement("div");
     d.className = "line" + (genuine ? " genuine" : "") + (risk >= THRESHOLD ? " hot" : "");
     d.innerHTML = "<span>" + out + '</span><span class="r">risk ' + risk + "</span>";
+    d.dataset.t = Date.now();
+    d.dataset.p = JSON.stringify(ms.map((m) => text.slice(m.start, m.end)));
     $("transcript").appendChild(d);
     $("transcript").scrollTop = $("transcript").scrollHeight;
   }
@@ -93,6 +95,7 @@
   function addLine(text) {
     text = String(text || "").trim(); if (!text) return;
     const res = session.add(text);
+    session.lines[session.lines.length - 1].t = Date.now();
     renderLine(text, res.matches, res.genuine, session.score().risk);
     update();
   }
@@ -117,6 +120,23 @@
     if (hindiUI()) say("सावधान! यह कॉल धोखाधड़ी लगती है। अपना ओटीपी किसी को न बताएं। पैसे न भेजें। फ़ोन काट दें।", "hi-IN", en);
     else en();
   }
+
+  // ---------- privacy: short memory ----------
+  // Call text is kept for 30 s only. After that a line keeps just its scam phrases (or nothing),
+  // in the page and in the detector's session. Stopping the mic forgets everything at once.
+  const MEMORY_MS = 30000;
+  function forgetLines(olderThan) {
+    const now = Date.now();
+    $("transcript").querySelectorAll(".line:not(.forgotten)").forEach((d, i) => {
+      if (now - Number(d.dataset.t) < olderThan) return;
+      const p = JSON.parse(d.dataset.p || "[]");
+      d.classList.add("forgotten");
+      d.firstChild.textContent = p.length ? "scam signs kept: " + p.join(" · ") : "(forgotten: no scam signs)";
+      d.dataset.p = "";
+    });
+    session.lines.forEach((l) => { if (now - (l.t || 0) >= olderThan) l.text = null; });
+  }
+  setInterval(() => forgetLines(MEMORY_MS), 5000);
 
   function familyText(r) {
     const name = store.get("famName", "");
@@ -210,7 +230,7 @@
     rec.onend = () => { if (wantMic) { try { rec.start(); } catch (e) { setMicUI(false); } } else setMicUI(false); };
     try { rec.start(); setMicUI(true); } catch (e) { setMicUI(false, "Could not start the microphone."); }
   }
-  function stopMic() { wantMic = false; if (rec) { try { rec.stop(); } catch (e) {} rec = null; } setMicUI(false); $("interim").textContent = ""; }
+  function stopMic() { forgetLines(0); wantMic = false; if (rec) { try { rec.stop(); } catch (e) {} rec = null; } setMicUI(false); $("interim").textContent = ""; }
   // ---------- on-device speech: mic audio to the local Whisper server (server/server.py) ----------
   let ws = null, actx = null, micStream = null;
   const useWhisper = () => $("engine").value === "whisper";
@@ -250,6 +270,7 @@
     ws.onclose = () => { if (wantMic) { stopWhisper(); setMicUI(false, "Speech server disconnected."); } };
   }
   function stopWhisper() {
+    forgetLines(0);
     wantMic = false;
     if (ws) { const w = ws; ws = null; try { w.close(); } catch (e) {} }
     if (actx) { actx.close(); actx = null; }
@@ -257,8 +278,19 @@
     setMicUI(false); $("interim").textContent = "";
   }
   $("micBtn").onclick = () => (wantMic ? (ws || micStream ? stopWhisper() : stopMic()) : (useWhisper() ? startWhisper() : startMic()));
-  $("engine").onchange = () => { if (wantMic) { ws || micStream ? stopWhisper() : stopMic(); } };
+  $("engine").onchange = () => {
+    if (wantMic) { ws || micStream ? stopWhisper() : stopMic(); }
+    if (!useWhisper() && !confirm("Browser speech sends the call audio to the browser's cloud speech service (Google for Chrome). On-device mode keeps audio on this device. Use cloud speech anyway?")) $("engine").value = "whisper";
+    showPrivacy();
+  };
+  function showPrivacy() {
+    const local = useWhisper();
+    $("privacy").innerHTML = (local ? "🔒 <b>On-device</b>: audio never leaves this device." : "⚠️ <b>Cloud speech</b>: audio goes to the browser's speech service.") +
+      "<br>Call text is forgotten after 30 s; only scam phrases are kept. Everything is wiped when you stop listening." +
+      "<br>Family alert holds only the risk level and steps seen, never what was said.";
+  }
   // Served by the local speech server? Then default to on-device speech.
+  $("engine").value = "whisper"; showPrivacy();
   fetch("/health").then((r) => r.ok && r.json()).then((h) => { if (h && h.ok) { $("engine").value = "whisper"; $("micHelp").textContent = `On-device speech: ${h.model} on ${h.device.toUpperCase()}. Audio never leaves this laptop. Put the call on speaker next to it.`; } }).catch(() => {});
   $("resetLive").onclick = resetAll;
   if (!SR) $("micHelp").textContent = "This browser has no speech recognition. Open the page in Chrome or Edge for live listening, or use Sample calls and Type a line.";
