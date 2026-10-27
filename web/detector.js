@@ -31,6 +31,7 @@
       ["(ਬੈਂਕ)", 0.25]
     ],
     2: [
+      ["(ग्रग|ड्रक|ड्राग|वोरेंट|वॉरेंट|वारेंट|गरिबतार|गिरबतार|पारसर|पार्सर)", 0.6],
       ["\\b(arrest warrant|digital arrest)\\b", 0.95],
       ["\\b(giraftar|griftar|gira?ftaar|griftaar|arrest|arrested|warrant)\\b", 0.8],
       ["\\b(money laundering|hawala|drugs|fir|jail|gair ?kanooni|illegal)\\b", 0.7],
