@@ -24,6 +24,10 @@ Nazar listens to phone calls, the most private conversations people have. So pri
 | 5. You press Stop | Your browser | **Everything is wiped** |
 | 6. If it is a scam | Your choice: WhatsApp, Telegram, copy or share | Only: *"possible scam call right now, risk 70/100, steps seen: authority, fear, time"* |
 
+## The complaint report (only if you choose)
+
+After hanging up you can press **Save a report for the complaint**. It downloads a small text file to your device with the time, the highest risk and the scam warning words (e.g. "Authority: Inspector, Cyber Crime"), to help when calling 1930 or filing on cybercrime.gov.in. It holds no recording and no conversation, and it is never uploaded anywhere.
+
 ## What the family alert contains
 
 ```
