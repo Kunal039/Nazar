@@ -74,6 +74,7 @@
     let svg = '<line x1="0" x2="' + W + '" y1="' + y(THRESHOLD) + '" y2="' + y(THRESHOLD) + '" stroke="#8B2E16" stroke-dasharray="4 4" stroke-width="1" vector-effect="non-scaling-stroke"/>';
     if (h.length) {
       const pts = h.map((v, i) => x(i) + "," + y(v)).join(" ");
+      svg += '<polygon points="' + x(0) + "," + (H - pad) + " " + pts + " " + x(h.length - 1) + "," + (H - pad) + '" fill="rgba(224,112,27,.15)"/>';
       svg += '<polyline points="' + pts + '" fill="none" stroke="#4A3B32" stroke-width="2.5" vector-effect="non-scaling-stroke"/>';
     }
     $("spark").innerHTML = svg;

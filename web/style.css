@@ -175,3 +175,5 @@ header .badge { display: inline-block; margin-left: 8px; padding: 2px 10px; bord
 #bar { height: 12px; border: 0; border-radius: 999px; background: linear-gradient(90deg, #dcefdd 0 40%, #fbefd2 40% 70%, #f7ddd4 70%); }
 #fill { border-radius: 999px; }
 #bar .tick { width: 2px; background: var(--deep); }
+
+#spark { border-radius: 10px; background: linear-gradient(#fff, #fdf8f2); }
