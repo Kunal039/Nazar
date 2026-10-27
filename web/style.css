@@ -134,3 +134,8 @@ button, .btnlink, select { min-height: 44px; }
 .ring { --p: 0; --c: #2E7D32; width: 112px; height: 112px; border-radius: 50%; flex: none; display: grid; place-items: center;
   background: conic-gradient(var(--c) calc(var(--p) * 1%), #efe4d6 0); transition: background .4s; }
 .ring #risk { width: 88px; height: 88px; border-radius: 50%; background: var(--tint); display: grid; place-items: center; font-size: 42px; min-width: 0; }
+
+/* Level badge */
+#level { display: inline-block; padding: 4px 14px; border-radius: 999px; background: #e6f2e7; font-size: 20px; }
+#level[data-level="warn"] { background: #fbefd2; }
+#level[data-level="danger"] { background: #f7ddd4; }

@@ -83,6 +83,7 @@
     const r = session.score();
     $("risk").textContent = r.risk;
     $("level").textContent = LEVEL_TXT[r.level];
+    $("level").dataset.level = r.level;
     $("level").style.color = $("risk").style.color = LEVEL_COL[r.level];
     $("fill").style.width = r.risk + "%";
     $("ring").style.setProperty("--p", r.risk);
