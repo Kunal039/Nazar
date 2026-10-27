@@ -201,3 +201,7 @@ header .badge { display: inline-block; margin-left: 8px; padding: 2px 10px; bord
 /* Inputs and selects match the theme */
 select, input[type="text"], input:not([type]), textarea { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; background: #fff; font: inherit; }
 select:hover, input:hover { border-color: var(--gold); }
+
+/* Live loudness bar along the bottom of the mic button */
+button.mic { position: relative; overflow: hidden; }
+button.mic::after { content: ""; position: absolute; left: 0; bottom: 0; height: 4px; width: calc(var(--lvl, 0) * 100%); background: #F2C27A; transition: width .1s; }

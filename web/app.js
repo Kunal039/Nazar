@@ -259,6 +259,7 @@
     if (ws) { const w = ws; ws = null; try { w.close(); } catch (e) {} }
     if (actx) { actx.close(); actx = null; }
     if (micStream) { micStream.getTracks().forEach((t) => t.stop()); micStream = null; }
+    $("micBtn").style.setProperty("--lvl", 0);
     setMicUI(false, msg); $("interim").textContent = "";
   }
   const stopMic = stopListening;
@@ -288,7 +289,10 @@
       proc.onaudioprocess = (e) => {
         if (!ws || ws.readyState !== 1) return;
         const f = e.inputBuffer.getChannelData(0), pcm = new Int16Array(f.length);
-        for (let i = 0; i < f.length; i++) pcm[i] = Math.max(-1, Math.min(1, f[i])) * 32767;
+        let sum = 0;
+        for (let i = 0; i < f.length; i++) { pcm[i] = Math.max(-1, Math.min(1, f[i])) * 32767; sum += f[i] * f[i]; }
+        // Loudness for the level bar on the mic button, so the user can see the call is heard.
+        $("micBtn").style.setProperty("--lvl", Math.min(1, Math.sqrt(sum / f.length) * 8).toFixed(2));
         ws.send(pcm.buffer);
       };
       srcNode.connect(proc); proc.connect(actx.destination);
