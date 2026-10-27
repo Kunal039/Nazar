@@ -125,3 +125,7 @@ label.small { font-size: 14px; color: var(--muted); display: flex; gap: 8px; ali
 button, .btnlink, select { min-height: 44px; }
 .tab { min-height: 40px; }
 @media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } }
+
+/* Phones: full-width mic button, no empty gap under it */
+@media (max-width: 600px) { button.mic { width: 100%; } .microw .state { flex: 1; } }
+.interim:empty { display: none; }
