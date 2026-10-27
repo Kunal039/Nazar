@@ -313,6 +313,12 @@
     ws.onerror = () => { if (me === run) stopListening("No on-device speech server. Double-click start.bat, then try again."); };
     ws.onclose = () => { if (me === run) stopListening("Speech server disconnected."); };
   }
+  // Space bar starts or stops listening, unless the user is typing.
+  document.addEventListener("keydown", (e) => {
+    if (e.code !== "Space" || e.repeat || /INPUT|TEXTAREA|SELECT|BUTTON/.test(document.activeElement.tagName)) return;
+    if (document.querySelector("#pane-live").hidden) return;
+    e.preventDefault(); $("micBtn").click();
+  });
   $("micBtn").onclick = () => (wantMic ? stopListening() : (useWhisper() ? startWhisper() : startMic()));
   $("engine").onchange = () => {
     if (wantMic) stopListening();
