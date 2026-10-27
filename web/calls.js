@@ -331,7 +331,8 @@
       "बेटा, मेरे फ़ोन में पैसे भेजने वाला ऐप नहीं चल रहा।",
       "तू मेरी तरफ़ से बिजली का बिल भर दे, मैं तुझे पैसे दे दूँगी।"
     ]},
-    {id: "S26", set: "v3", kind: "scam", lang: "Hinglish", title: "FedEx parcel with passports, Mumbai", moneyAt: 4, lines: ["Hello, main FedEx courier Mumbai se bol raha hoon.", "Aapke naam ka parcel Taiwan ja raha tha, usme 5 fake passport aur MDMA mila hai.", "Main call Mumbai Police cyber crime ko transfer kar raha hoon, inspector aapse baat karenge.", "Aapke khilaf FIR ho chuki hai, kisi ko batana mat, Skype pe video call pe rahiye.", "Verification ke liye apne account ka saara paisa RBI ke safe account mein transfer kijiye."]}
+    {id: "S26", set: "v3", kind: "scam", lang: "Hinglish", title: "FedEx parcel with passports, Mumbai", moneyAt: 4, lines: ["Hello, main FedEx courier Mumbai se bol raha hoon.", "Aapke naam ka parcel Taiwan ja raha tha, usme 5 fake passport aur MDMA mila hai.", "Main call Mumbai Police cyber crime ko transfer kar raha hoon, inspector aapse baat karenge.", "Aapke khilaf FIR ho chuki hai, kisi ko batana mat, Skype pe video call pe rahiye.", "Verification ke liye apne account ka saara paisa RBI ke safe account mein transfer kijiye."]},
+    {id: "S27", set: "v3", kind: "scam", lang: "English", title: "TRAI SIM block, Aadhaar misuse", moneyAt: 4, lines: ["This is an automated call from TRAI. Your mobile number will be blocked in two hours.", "Your Aadhaar was used to buy a SIM that sent illegal advertisements and harassment messages.", "A case is registered against you with Mumbai cyber crime police, I am connecting you to the officer.", "Officer here. You are under digital arrest, stay on video and do not disconnect or tell your family.", "To prove your innocence, transfer your savings to the verification account for checking."]}
   ];
 
   if (typeof module !== "undefined" && module.exports) module.exports = { CALLS };
