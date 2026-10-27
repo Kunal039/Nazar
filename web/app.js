@@ -15,6 +15,10 @@
   function esc(s) { return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
   function hindiUI() { return $("lang").value !== "en-IN"; }
 
+  // First visit: three-step tips, hidden for good once dismissed.
+  if (store.get("introSeen", "") !== "1") $("intro").hidden = false;
+  $("introClose").onclick = () => { $("intro").hidden = true; store.set("introSeen", "1"); };
+
   // ---------- static bits ----------
   const STEP_HELP = [
     "Authority: the caller claims to be CBI, police, customs, a court or a bank.",
