@@ -177,7 +177,11 @@
     try { speechSynthesis.cancel(); } catch (e) {}
     speakingWarning = true;
     const en = () => say("Warning. This looks like a scam. Do not share your OTP. Do not send money. Hang up now.", "en-IN", () => { speakingWarning = false; });
-    if (hindiUI()) say("सावधान! यह कॉल धोखाधड़ी लगती है। अपना ओटीपी किसी को न बताएं। पैसे न भेजें। फ़ोन काट दें।", "hi-IN", en);
+    const hi = () => say("सावधान! यह कॉल धोखाधड़ी लगती है। अपना ओटीपी किसी को न बताएं। पैसे न भेजें। फ़ोन काट दें।", "hi-IN", en);
+    // Punjabi when the device has a Punjabi voice; otherwise Hindi, which Punjabi speakers understand.
+    const hasPa = () => { try { return speechSynthesis.getVoices().some((v) => /^pa/i.test(v.lang)); } catch (e) { return false; } };
+    if ($("lang").value === "pa-IN" && hasPa()) say("ਸਾਵਧਾਨ! ਇਹ ਕਾਲ ਠੱਗੀ ਲੱਗਦੀ ਹੈ। ਆਪਣਾ ਓਟੀਪੀ ਕਿਸੇ ਨੂੰ ਨਾ ਦੱਸੋ। ਪੈਸੇ ਨਾ ਭੇਜੋ। ਫ਼ੋਨ ਕੱਟ ਦਿਓ।", "pa-IN", en);
+    else if (hindiUI()) hi();
     else en();
   }
 
