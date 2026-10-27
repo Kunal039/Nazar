@@ -240,7 +240,12 @@
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   let rec = null, wantMic = false;
   let run = 0;   // bumps on every start/stop; async start steps from an older run give up
+  // Call timer next to the status while listening.
+  let t0 = 0, timer = null;
+  function tick() { const s = Math.floor((Date.now() - t0) / 1000); $("micState").dataset.time = Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); }
   function setMicUI(on, text) {
+    clearInterval(timer); delete $("micState").dataset.time;
+    if (on) { t0 = Date.now(); tick(); timer = setInterval(tick, 1000); }
     $("micBtn").textContent = on ? "Stop listening" : "Start listening";
     $("micBtn").classList.toggle("live", on);
     $("micBtn").setAttribute("aria-pressed", on ? "true" : "false");

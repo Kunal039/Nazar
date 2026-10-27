@@ -241,3 +241,5 @@ kbd.hint { font: 12px/1 inherit; color: var(--muted); border: 1px solid var(--li
 
 /* Keep the score in view while the transcript grows (wide screens) */
 @media (min-width: 861px) { .card.view { position: sticky; top: 12px; align-self: start; } }
+
+.state[data-time]::after { content: " · " attr(data-time); font-variant-numeric: tabular-nums; }
