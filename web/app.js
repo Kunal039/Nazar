@@ -421,6 +421,9 @@
     sendTelegram("Nazar test message: family alerts are working. You will get a message like this if a scam call is detected.", $("setupMsg"));
   };
   $("tgResend").onclick = () => sendTelegram($("family").textContent);
+  // Phones: share the alert through any app (SMS, WhatsApp, Telegram...).
+  if (navigator.share) $("shareAlert").hidden = false;
+  $("shareAlert").onclick = () => navigator.share({ title: "Nazar alert", text: $("family").textContent }).catch(() => {});
   $("copyAlert").onclick = async () => {
     try { await navigator.clipboard.writeText($("family").textContent); $("copyAlert").textContent = "Copied ✓"; }
     catch (e) { $("copyAlert").textContent = "Copy failed"; }
