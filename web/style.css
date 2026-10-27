@@ -145,3 +145,7 @@ button, .btnlink, select { min-height: 44px; }
 .chip { border-radius: 10px; text-align: center; font-size: 12.5px; padding: 9px 4px; line-height: 1.2; transition: background .3s, color .3s; }
 .chip.on::before { content: "¹3  "; font-weight: bold; }
 @media (max-width: 420px) { .chip { font-size: 11px; padding: 8px 2px; } }
+
+/* Softer cards, richer header */
+.card { border-radius: 14px; box-shadow: 0 4px 18px rgba(74, 59, 50, .08); }
+header { background: linear-gradient(135deg, var(--dk), var(--brown) 70%); box-shadow: 0 2px 10px rgba(30, 22, 18, .25); }
