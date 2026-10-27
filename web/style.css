@@ -273,3 +273,6 @@ html.big body, html.big .line, html.big #why, html.big .family, html.big .note, 
   .card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
   body { background: #fff; color: #000; }
 }
+@media (prefers-color-scheme: dark) {
+  .btnlink { background: #33271f; color: #f6ebe0; border-color: #8a7464; }
+}
