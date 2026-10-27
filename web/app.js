@@ -253,6 +253,10 @@
   // One stop for both engines: whatever is running or still starting is shut down.
   function stopListening(msg) {
     run++;
+    if (!msg && session.history.length) {
+      const top = Math.max(...session.history), st = session.score().stages.map((id) => STAGES[id - 1].name).join(", ");
+      msg = `Call ended · highest risk ${top}` + (st ? ` · steps seen: ${st}` : " · no scam signs");
+    }
     forgetLines(0);
     wantMic = false;
     if (rec) { const r = rec; rec = null; try { r.abort(); } catch (e) {} }
