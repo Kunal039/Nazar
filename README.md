@@ -5,6 +5,12 @@ Nazar listens to a phone call on speaker and warns the user, in Hindi, English o
 
 Team: Kunal Mittal (lead), Ansh Kumar, Shivani Kumari. Code Yudh 2026 final, Chandigarh University.
 
+| Scam detected | Dark mode |
+|---|---|
+| ![Nazar flags a digital-arrest scam call](docs/screenshots/scam-detected.png) | ![Dark mode](docs/screenshots/dark-mode.png) |
+
+Live website: https://nazar-codevators.vercel.app (browser speech) · Private on-device version: `start.bat`
+
 ## What was built when (transparency note)
 
 | Part | Origin |
