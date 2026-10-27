@@ -243,3 +243,7 @@ kbd.hint { font: 12px/1 inherit; color: var(--muted); border: 1px solid var(--li
 @media (min-width: 861px) { .card.view { position: sticky; top: 12px; align-self: start; } }
 
 .state[data-time]::after { content: " · " attr(data-time); font-variant-numeric: tabular-nums; }
+
+/* Skip link for keyboard and screen-reader users */
+.skip { position: absolute; left: -999px; top: 8px; background: #fff; color: var(--dk); padding: 8px 14px; border-radius: 8px; z-index: 20; }
+.skip:focus { left: 8px; }
