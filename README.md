@@ -27,7 +27,7 @@ cd web
 python -m http.server 8000
 ```
 
-Tests: `node web/test.js` (detector on 71 labelled calls: 35 scam, 36 genuine), `node web/test_addressed.js`, `node web/test_fold.js`, `node web/test_score.js`, `python server/test_cutter.py`; end to end through Whisper: `node web/e2e_live.js demo-audio/S1_full.wav`.
+Tests: `node web/test.js` (detector on 107 labelled calls: 53 scam, 54 genuine), `node web/test_addressed.js`, `node web/test_fold.js`, `node web/test_score.js`, `python server/test_cutter.py`; end to end through Whisper: `node web/e2e_live.js demo-audio/S1_full.wav`.
 
 Docs: [privacy](docs/privacy.md), [architecture](docs/architecture.md), [scoring](docs/scoring.md), [FAQ](docs/faq.md). One-click start on Windows: `start.bat`.
 
@@ -47,9 +47,10 @@ Test without a mic: `python server/stream_test.py call_line1.wav call_line2.wav`
 - Text is folded (Unicode normalisation, nukta/halant removal, Gurmukhi mapped to Devanagari) so Hindi, Punjabi and Romanised speech match one word list.
 - Each of the five stages has weighted cue phrases; a score above 70 with stage progression raises the alarm.
 - The alarm needs a second-person word somewhere in the call, so news reports and stories about scams do not trigger it.
+- A call that shows scam awareness (warns about scams, mentions the 1930 helpline, says to report it) gets a caution at most.
 - Out-of-scope scams (e.g. lottery, job fraud) are reported separately in the test bench.
 
 ## Known limits
 
-- Fixed at the venue: G22 (a TV news report about a scam racket) was a false alarm. Threats now count only once the caller addresses the listener ("you", aap, tusi, ਤੁਸੀਂ); a call that only talks about other people stays below the alarm. Result now: 32/32 in-scope scams caught before the money ask, 0/36 false alarms.
+- Fixed at the venue: G22 (a TV news report about a scam racket) was a false alarm. Threats now count only once the caller addresses the listener ("you", aap, tusi, ਤੁਸੀਂ); a call that only talks about other people stays below the alarm. Result now: 46/46 in-scope scams caught before the money ask; 1/54 genuine calls raise the alarm (G49, see [known limits](docs/known-limits.md)).
 - Browser speech recognition needs internet; the on-device Whisper server removes that need.
