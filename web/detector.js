@@ -134,6 +134,13 @@
   const COMPILED = STAGES.map((st) => LEX[st.id].map(([src, wt, word]) => ({ stage: st.id, re: new RegExp(WORD_START + "(?:" + fold(src).t + ")" + (word ? WORD_END : ""), "giu"), wt })));
   const GENUINE = new RegExp(fold(GENUINE_SRC).t, "iu");
   const WORDCHAR = /[\p{L}\p{M}\p{N}]/u;
+  // Second-person words. A scammer always talks *to* the listener ("your Aadhaar", "aapke naam par");
+  // a news report or a story about a scam (G22) only talks *about* other people.
+  const YOU_SRC = "(you|your|yours|yourself|aap|aapka|aapke|aapki|aapko|apka|apke|apko|tum|tumhara|tumhe|tera|teri|tujhe|tusi|tussi|tuhade|tuhada|tuhadi|tuhanu|tainu)";
+  // Hindi/Punjabi forms as stems, so आपका, आपके, तुम्हारा, ਤੁਹਾਡਾ all count.
+  const YOU_INDIC_SRC = "(आप|तुम|तेरा|तेरी|तुझ|ਤੁਸੀਂ|ਤੁਸੀ|ਤੁਹਾ|ਤੈਨੂੰ|ਤੇਰਾ|ਤੇਰੀ|ਆਪ)";
+  const YOU = new RegExp(WORD_START + "(?:" + fold(YOU_SRC).t + WORD_END + "|" + fold(YOU_INDIC_SRC).t + ")", "iu");
+  const NOT_ADDRESSED_CAP = 39;
 
   function analyzeLine(text) {
     const src = String(text);
@@ -154,16 +161,17 @@
         }
       }
     }
-    return { matches, genuine };
+    return { matches, genuine, addressed: YOU.test(t) };
   }
 
   class Session {
     constructor() { this.reset(); }
-    reset() { this.lines = []; this.conf = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }; this.first = {}; this.reasons = []; this.history = []; }
+    reset() { this.addressed = false; this.lines = []; this.conf = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }; this.first = {}; this.reasons = []; this.history = []; }
     add(text) {
       const idx = this.lines.length;
       const res = analyzeLine(text);
       this.lines.push({ text, matches: res.matches, genuine: res.genuine });
+      if (res.addressed) this.addressed = true;
       for (const m of res.matches) {
         if (m.weight > this.conf[m.stage]) this.conf[m.stage] = m.weight;
         if (this.first[m.stage] === undefined) this.first[m.stage] = idx;
@@ -182,7 +190,9 @@
         if (this.conf[s] > 0 && this.conf[s + 1] > 0 && this.first[s] <= this.first[s + 1]) prog += 8;
       }
       prog = Math.min(prog, 24);
-      const risk = Math.max(0, Math.min(100, Math.round(base + prog)));
+      let risk = Math.max(0, Math.min(100, Math.round(base + prog)));
+      // Threats count only when aimed at the listener: never alarm on a call that has not said "you" yet.
+      if (!this.addressed) risk = Math.min(risk, NOT_ADDRESSED_CAP);
       const level = risk >= THRESHOLD ? "danger" : risk >= 40 ? "warn" : "safe";
       const stages = STAGES.filter((s) => this.conf[s.id] > 0).map((s) => s.id);
       return { risk, level, stages };

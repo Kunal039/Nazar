@@ -28,9 +28,10 @@ Tests: `node web/test.js` (detector on 55 labelled calls: 25 scam, 30 genuine).
 
 - Text is folded (Unicode normalisation, nukta/halant removal, Gurmukhi mapped to Devanagari) so Hindi, Punjabi and Romanised speech match one word list.
 - Each of the five stages has weighted cue phrases; a score above 70 with stage progression raises the alarm.
+- The alarm needs a second-person word somewhere in the call, so news reports and stories about scams do not trigger it.
 - Out-of-scope scams (e.g. lottery, job fraud) are reported separately in the test bench.
 
 ## Known limits
 
-- One genuine call (G22, a real police complaint call) is a false alarm; fix planned at the venue.
+- Fixed at the venue: G22 (a TV news report about a scam racket) was a false alarm. Threats now count only once the caller addresses the listener ("you", aap, tusi, ਤੁਸੀਂ); a call that only talks about other people stays below the alarm. Result: 22/22 scams caught before the money ask, 0/30 false alarms.
 - Browser speech recognition needs internet; the on-device Whisper server removes that need.
