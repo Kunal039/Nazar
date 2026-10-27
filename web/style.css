@@ -101,3 +101,6 @@ footer { font-size: 13.5px; color: var(--muted); padding-bottom: 30px; }
 #overlay button.white { font-size: 20px; padding: 12px 26px; background: #fff; color: var(--deep); border-color: #fff; }
 #overlay button.ghost { font-size: 16px; padding: 12px 20px; background: transparent; color: #fff; border-color: #fff; }
 @media (max-width: 600px) { #overlay h2 { font-size: 32px; } #overlay p { font-size: 19px; } }
+
+.privacy{font-size:.85rem;background:#eef7ee;border-left:4px solid #2e7d32;padding:6px 10px;border-radius:4px;margin-top:8px}
+.line.forgotten span:first-child{color:#888;font-style:italic}

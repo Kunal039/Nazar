@@ -38,11 +38,12 @@
       <div class="btns">
         <button class="primary" id="micBtn">Start listening</button>
         <button id="resetLive">Clear</button>
-        <select id="engine" aria-label="Speech engine"><option value="browser">Browser speech (Chrome)</option><option value="whisper">On-device (Whisper)</option></select>
+        <select id="engine" aria-label="Speech engine"><option value="whisper">On-device (Whisper)</option><option value="browser">Browser speech (cloud)</option></select>
         <span id="micState" class="state">Microphone off</span>
       </div>
       <p class="note" id="micHelp">Put the phone call on speaker next to this laptop, or read a scam script aloud. Speech is turned into text by your browser's speech service (Chrome or Edge). Nazar's scoring runs here on this page.</p>
       <div id="interim" class="interim" aria-live="polite"></div>
+      <p class="privacy" id="privacy"></p>
     </div>
 
     <div class="pane" id="pane-demo" hidden>
