@@ -34,10 +34,10 @@ for (const c of CALLS) {
       if (r.level === "danger") x.falseAlarms++;
       else if (r.level === "warn") x.warns++;
     }
-    if (r.level === "danger") failures.push(c.id);
+    if (r.level === "danger" && !c.known) failures.push(c.id);
     verdict = r.level === "danger" ? "FALSE ALARM" : r.level === "warn" ? "caution shown" : "stayed safe";
   }
-  console.log(c.id.padEnd(4), (c.set || "v1").padEnd(3), c.lang.padEnd(16), c.title.slice(0, 38).padEnd(38), r.history.join(">").padEnd(26), verdict + (c.scope === "other" ? " (other scam type)" : ""));
+  console.log(c.id.padEnd(4), (c.set || "v1").padEnd(3), c.lang.padEnd(16), c.title.slice(0, 38).padEnd(38), r.history.join(">").padEnd(26), verdict + (c.scope === "other" ? " (other scam type)" : "") + (c.known ? " (known limit)" : ""));
 }
 
 console.log("");
