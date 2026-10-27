@@ -358,6 +358,8 @@
       "<br>Call text is forgotten after 30 s; only scam phrases are kept. Everything is wiped when you stop listening." +
       "<br>Family alert holds only the risk level and steps seen, never what was said.";
   }
+  // Offline helper (network first), so the page still opens with no connection.
+  if ("serviceWorker" in navigator && location.protocol !== "file:") navigator.serviceWorker.register("sw.js").catch(() => {});
   // Served by the local speech server? Then default to on-device speech.
   $("engine").value = "whisper"; showPrivacy();
   fetch("/health").then((r) => r.ok && r.json()).then((h) => { if (h && h.ok) { $("engine").value = "whisper"; $("micHelp").textContent = `On-device speech: ${h.model} on ${h.device.toUpperCase()}. Audio never leaves this laptop. Put the call on speaker next to it.`; } }).catch(() => {});
