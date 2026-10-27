@@ -111,6 +111,14 @@ def health():
     return {"ok": model is not None, "model": app.state.model_name, "device": app.state.device}
 
 
+@app.middleware("http")
+async def no_cache(request, call_next):
+    # Always serve the latest page files, so a demo never runs an old cached version.
+    resp = await call_next(request)
+    resp.headers["Cache-Control"] = "no-cache"
+    return resp
+
+
 app.mount("/", StaticFiles(directory=WEB_DIR, html=True), name="web")
 
 
