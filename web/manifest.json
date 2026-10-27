@@ -1,0 +1,10 @@
+{
+  "name": "Nazar Scam Shield",
+  "short_name": "Nazar",
+  "description": "Warns you during a call the moment it turns into a digital-arrest scam.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#FFF8F0",
+  "theme_color": "#4A3B32",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
