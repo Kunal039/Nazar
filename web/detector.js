@@ -50,6 +50,7 @@
       ["(ਕੇਸ)", 0.4, "word"]
     ],
     3: [
+      ["((ghar|ghar walon|gharwalon|family|parivaar|parivar|maa baap) ko (bhi )?(mat|na|nahi) bata|kisi se (bhi )?baat (mat|nahi|na) kar)", 0.9],
       ["(kisi ko (bhi )?(mat |na |nahi )?bata(na|yein|iye|o|ein)|don'?t tell (anyone|anybody|your family)|tell no one|do not tell (anyone|anybody|your family)|do not inform)", 0.95],
       ["(kise nu (vi )?(na|nahi|mat) dass?(na|eyo|io|o|ana|ange))", 0.95],
       ["(video call (par|pe) (bane )?rah(iye|o|en|ein)|stay on (the )?(video )?call|camera on|(call|phone) (mat|na|nahi) (kaat|kat|katt|disconnect)|don'?t (disconnect|cut|end) the call|do not (disconnect|cut|end) the call)", 0.9],
