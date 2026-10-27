@@ -330,7 +330,8 @@
     { id: "G30", set: "v2", kind: "genuine", lang: "Hindi", title: "Grandmother asks grandson for help", lines: [
       "बेटा, मेरे फ़ोन में पैसे भेजने वाला ऐप नहीं चल रहा।",
       "तू मेरी तरफ़ से बिजली का बिल भर दे, मैं तुझे पैसे दे दूँगी।"
-    ]}
+    ]},
+    {id: "S26", set: "v3", kind: "scam", lang: "Hinglish", title: "FedEx parcel with passports, Mumbai", moneyAt: 4, lines: ["Hello, main FedEx courier Mumbai se bol raha hoon.", "Aapke naam ka parcel Taiwan ja raha tha, usme 5 fake passport aur MDMA mila hai.", "Main call Mumbai Police cyber crime ko transfer kar raha hoon, inspector aapse baat karenge.", "Aapke khilaf FIR ho chuki hai, kisi ko batana mat, Skype pe video call pe rahiye.", "Verification ke liye apne account ka saara paisa RBI ke safe account mein transfer kijiye."]}
   ];
 
   if (typeof module !== "undefined" && module.exports) module.exports = { CALLS };
