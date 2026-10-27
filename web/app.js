@@ -16,9 +16,17 @@
   function hindiUI() { return $("lang").value !== "en-IN"; }
 
   // ---------- static bits ----------
+  const STEP_HELP = [
+    "Authority: the caller claims to be CBI, police, customs, a court or a bank.",
+    "Fear: a case, arrest warrant, drugs or money laundering in your name.",
+    "Isolation: don't tell anyone, stay on the video call, don't hang up.",
+    "Control: asks for OTP, Aadhaar, card or account details, or screen sharing.",
+    "Transfer: asks you to move money to a 'safe' or verification account."
+  ];
   STAGES.forEach((s) => {
     const c = document.createElement("span");
     c.className = "chip"; c.id = "chip" + s.id; c.textContent = s.id + " " + s.name;
+    c.title = STEP_HELP[s.id - 1];
     $("chips").appendChild(c);
     const l = document.createElement("span");
     l.className = "s" + s.id; l.textContent = s.name;
