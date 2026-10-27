@@ -76,6 +76,7 @@
       ["(ਖਾਤੇ ਦੀ ਜਾਣਕਾਰੀ|ਬੈਂਕ ਡਿਟੇਲ|ਅਕਾਊਂਟ ਨੰਬਰ|ਖਾਤਾ ਨੰਬਰ)", 0.55]
     ],
     5: [
+      ["(ट्रांसपर|ट्रांसफ़र कीजिए|सेफ अकाउंट|सेफ़ अकाउंट|प्रांच पर|आर्पी आई)", 0.6],
       ["\b(penalty|bail|settlement|clearance|fine)( amount| ke liye| ki rakam)?\b.{0,40}\b(bhej|transfer|jama|pay|deposit|daal)", 0.85],
       ["(safe account|secure account|rbi (ke )?(safe )?account|escrow account|verification amount|refundable (amount|deposit)|security deposit)", 0.95],
       ["\\b(rtgs|neft|imps)\\b", 0.3],
