@@ -70,8 +70,10 @@
     d.innerHTML = "<span>" + out + '</span><span class="r">risk ' + risk + "</span>";
     d.dataset.t = Date.now();
     d.dataset.p = JSON.stringify(ms.map((m) => text.slice(m.start, m.end)));
-    $("transcript").appendChild(d);
-    $("transcript").scrollTop = $("transcript").scrollHeight;
+    const t = $("transcript"), nearBottom = t.scrollHeight - t.scrollTop - t.clientHeight < 60;
+    t.appendChild(d);
+    // Follow new lines, but don't yank the view away if the user scrolled up to read.
+    if (nearBottom) t.scrollTo({ top: t.scrollHeight, behavior: "smooth" });
   }
 
   function drawSpark() {
