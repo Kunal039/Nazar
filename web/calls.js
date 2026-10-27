@@ -345,7 +345,8 @@
     {id: "G32", set: "v3", kind: "genuine", lang: "Hindi", title: "Son tells mother about a scam call he got", lines: ["माँ, आज मुझे एक कॉल आया, बोला सीबीआई से है और गिरफ्तारी वारंट है।", "मैंने फ़ोन काट दिया, ये सब धोखा होता है।", "अगर तुम्हें ऐसा कॉल आए तो पैसे मत भेजना, मुझे बता देना।"]},
     {id: "G33", set: "v3", kind: "genuine", lang: "English", title: "Lawyer friend about a real court date", lines: ["Hi, it's Arjun. Your property case is listed in court on Monday.", "The judge may ask for the sale deed, so please bring the original.", "My fee can be paid after the hearing, no hurry."]},
     {id: "G34", set: "v3", kind: "genuine", lang: "Hinglish", title: "Courier delivery with OTP for delivery", lines: ["Hello, main Delhivery se bol raha hoon, aapka parcel aaj deliver hoga.", "Delivery ke time OTP aayega, wo sirf mujhe darwaze pe batana.", "Aap ghar pe kab tak ho?"]},
-    {id: "G35", set: "v3", kind: "genuine", lang: "English", title: "Police verification for passport", lines: ["Good morning, I am a constable from the local police station.", "I am calling about your passport police verification.", "Please come to the station tomorrow with your Aadhaar and address proof. There is no fee."]}
+    {id: "G35", set: "v3", kind: "genuine", lang: "English", title: "Police verification for passport", lines: ["Good morning, I am a constable from the local police station.", "I am calling about your passport police verification.", "Please come to the station tomorrow with your Aadhaar and address proof. There is no fee."]},
+    {id: "G36", set: "v3", kind: "genuine", lang: "Punjabi (Gurmukhi)", title: "Brother asks to send money for fees", lines: ["ਵੀਰੇ, ਮੇਰੀ ਕਾਲਜ ਦੀ ਫੀਸ ਭਰਨੀ ਹੈ।", "ਤੁਸੀਂ ਮੇਰੇ ਖਾਤੇ ਵਿੱਚ ਪੈਸੇ ਭੇਜ ਦਿਓ, ਮੈਂ ਰਸੀਦ ਭੇਜ ਦਿਆਂਗਾ।"]}
   ];
 
   if (typeof module !== "undefined" && module.exports) module.exports = { CALLS };
