@@ -105,6 +105,14 @@
     const iris = level === "danger" ? "%23C62828" : level === "warn" ? "%23C9962B" : "%23E0701B";
     document.querySelector('link[rel="icon"]').href = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cellipse cx='32' cy='32' rx='30' ry='18' fill='%234A3B32'/%3E%3Ccircle cx='32' cy='32' r='12' fill='" + iris + "'/%3E%3Ccircle cx='32' cy='32' r='5' fill='%231E1612'/%3E%3C/svg%3E";
   }
+  // One plain sentence on why the score is what it is.
+  const PLAIN = { 1: "claims to be an officer", 2: "is making threats", 3: "wants to keep you alone", 4: "asks for your details", 5: "asks you to send money" };
+  function explain(r) {
+    if (!r.stages.length) return "No scam signs yet. Alert at 70.";
+    const parts = r.stages.map((id) => PLAIN[id]);
+    const list = parts.length > 1 ? parts.slice(0, -1).join(", ") + " and " + parts[parts.length - 1] : parts[0];
+    return "The caller " + list + ".";
+  }
   function countTo(el, to) {
     const from = Number(el.textContent) || 0;
     if (from === to || matchMedia("(prefers-reduced-motion: reduce)").matches) { el.textContent = to; return; }
@@ -120,6 +128,7 @@
     document.title = (r.level === "danger" ? "⚠ " : "") + (session.history.length ? r.risk + " · " : "") + "Nazar Scam Shield";
     $("level").textContent = LEVEL_TXT[r.level];
     $("level").dataset.level = r.level;
+    $("explain").textContent = explain(r);
     $("level").style.color = $("risk").style.color = LEVEL_COL[r.level];
     $("fill").style.width = r.risk + "%";
     $("ring").style.setProperty("--p", r.risk);
