@@ -49,6 +49,7 @@
   $("lang").value = store.get("lang", "hi-IN");
   $("lang").onchange = () => {
     store.set("lang", $("lang").value);
+    setMicUI(wantMic, $("micState").textContent);
     if (rec) { stopMic(); startMic(); }
     // On-device mode: tell the speech server; no need to restart the mic.
     if (ws && ws.readyState === 1) ws.send("lang:" + $("lang").value.slice(0, 2));
@@ -257,10 +258,12 @@
   // Call timer next to the status while listening.
   let t0 = 0, timer = null;
   function tick() { const s = Math.floor((Date.now() - t0) / 1000); $("micState").dataset.time = Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); }
+  const MIC_TXT = { hi: ["सुनना शुरू करें", "सुनना बंद करें"], pa: ["ਸੁਣਨਾ ਸ਼ੁਰੂ ਕਰੋ", "ਸੁਣਨਾ ਬੰਦ ਕਰੋ"], en: ["Start listening", "Stop listening"] };
+  const uiLang = () => $("lang").value.slice(0, 2);
   function setMicUI(on, text) {
     clearInterval(timer); delete $("micState").dataset.time;
     if (on) { t0 = Date.now(); tick(); timer = setInterval(tick, 1000); }
-    $("micBtn").textContent = on ? "Stop listening" : "Start listening";
+    $("micBtn").textContent = (MIC_TXT[uiLang()] || MIC_TXT.en)[on ? 1 : 0];
     $("micBtn").classList.toggle("live", on);
     $("micBtn").setAttribute("aria-pressed", on ? "true" : "false");
     $("micState").textContent = text || (on ? "Listening" : "Microphone off");
