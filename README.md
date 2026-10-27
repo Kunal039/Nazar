@@ -44,6 +44,17 @@
 
 ---
 
+<p align="center">
+  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=000">
+  <img alt="Python" src="https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff">
+  <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=fff">
+  <img alt="OpenAI Whisper" src="https://img.shields.io/badge/Whisper-faster--whisper-412991?logo=openai&logoColor=fff">
+  <img alt="NVIDIA CUDA" src="https://img.shields.io/badge/CUDA-GPU-76B900?logo=nvidia&logoColor=fff">
+  <img alt="Vercel" src="https://img.shields.io/badge/Vercel-000?logo=vercel&logoColor=fff">
+  <img alt="GitHub Actions" src="https://img.shields.io/badge/GitHub%20Actions-2088FF?logo=githubactions&logoColor=fff">
+  <img alt="PWA" src="https://img.shields.io/badge/PWA-installable-5A0FC8?logo=pwa&logoColor=fff">
+</p>
+
 ## 🔒 Your privacy comes first
 
 Nazar listens to phone calls, so privacy is the rule everything is built around:
