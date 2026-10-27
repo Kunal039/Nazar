@@ -18,3 +18,4 @@ jobs:
           python-version: "3.12"
       - run: pip install numpy fastapi uvicorn faster-whisper
       - run: python server/test_cutter.py
+      - run: python server/test_privacy.py
