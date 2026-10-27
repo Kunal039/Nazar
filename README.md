@@ -3,12 +3,19 @@
 </p>
 
 <p align="center">
+  <a href="PRIVACY.md"><img src="docs/privacy-banner.svg" alt="Privacy first: your call stays on your device. Never leaves your device, never recorded, forgotten in 30 seconds, family gets the warning not the words. Checked by automated privacy tests." width="100%"></a>
+</p>
+
+<p align="center">
   <a href="https://nazar-codevators.vercel.app"><img alt="Live demo" src="https://img.shields.io/badge/live%20demo-nazar--codevators.vercel.app-E0701B?style=for-the-badge"></a>
   <a href="https://github.com/Kunal039/Nazar_CodeVators/actions/workflows/test.yml"><img alt="Tests" src="https://img.shields.io/github/actions/workflow/status/Kunal039/Nazar_CodeVators/test.yml?label=tests&style=for-the-badge"></a>
   <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-4A3B32?style=for-the-badge"></a>
 </p>
 <p align="center">
-  <img alt="Privacy" src="https://img.shields.io/badge/privacy-on--device-2E7D32">
+  <a href="PRIVACY.md"><img alt="Privacy: on-device, nothing recorded" src="https://img.shields.io/badge/%F0%9F%94%92%20privacy-on--device%20%C2%B7%20nothing%20recorded-2E7D32?style=for-the-badge"></a>
+  <a href="server/test_privacy.py"><img alt="Privacy tests" src="https://img.shields.io/badge/privacy%20tests-run%20on%20every%20change-2E7D32?style=for-the-badge"></a>
+</p>
+<p align="center">
   <img alt="Languages" src="https://img.shields.io/badge/languages-Hindi%20%7C%20English%20%7C%20Punjabi-C9962B">
   <img alt="Speech" src="https://img.shields.io/badge/speech-Whisper%20large--v3--turbo-8B2E16">
   <img alt="Scams caught" src="https://img.shields.io/badge/scams%20caught%20before%20money%20ask-54%2F54-2E7D32">
