@@ -415,6 +415,8 @@
   $("custom").addEventListener("keydown", (e) => { if (e.key === "Enter") $("addBtn").click(); });
 
   // ---------- overlay ----------
+  // Esc closes the alarm screen ("I'm sure it's safe"), like any dialog.
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && $("overlay").classList.contains("show")) closeOverlay(); });
   function closeOverlay() { dismissed = true; $("overlay").classList.remove("show"); try { speechSynthesis.cancel(); } catch (e) {} speakingWarning = false; }
   $("hangBtn").onclick = () => { closeOverlay(); stopMic(); stopPlay(); $("after").hidden = false; $("after").scrollIntoView({ behavior: "smooth" }); };
   $("afterClose").onclick = () => { $("after").hidden = true; };
