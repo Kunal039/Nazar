@@ -115,7 +115,7 @@ app.mount("/", StaticFiles(directory=WEB_DIR, html=True), name="web")
 
 
 def main():
-    global model
+    global model, SPEECH_RMS
     here = os.path.dirname(os.path.abspath(__file__))
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="large-v3-turbo")
@@ -123,7 +123,10 @@ def main():
     ap.add_argument("--compute", default=None)
     ap.add_argument("--models", default=os.environ.get("NAZAR_MODELS", os.path.join(here, "..", "..", "stt-data", "models")))
     ap.add_argument("--port", type=int, default=8000)
+    ap.add_argument("--speech-rms", type=float, default=SPEECH_RMS,
+                    help="loudness a frame needs to count as speech; raise it (e.g. 0.03) in a noisy hall")
     a = ap.parse_args()
+    SPEECH_RMS = a.speech_rms
     compute = a.compute or ("float16" if a.device == "cuda" else "int8")
     t0 = time.perf_counter()
     try:
