@@ -15,5 +15,6 @@ Notes
 - The language setting must match the call: G2 (English) run as Hindi gives garbled text (and no alarm).
 
 ## Update (28 Oct, after adding Whisper-mishearing variants)
-S1 risk by sentence went from 28 → 28 → 65 → 100 to **28 → 58 → 65 → 100**: the caution now shows at sentence 2 instead of 3.
-The full alarm still comes at sentence 4 by design: Authority and Fear alone can reach at most 65; the alarm needs a third step (here Isolation, "don't tell anyone").
+S1 risk by sentence went from 28 → 28 → 65 → 100 (alarm at sentence 4) to **28 → 58 → 70+ (alarm at sentence 3)**.
+Whisper wrote "drugs" as ग्रग and "warrant" as वोरेंट; both spellings are now in the word lists, so the strong "arrest warrant" phrase is recognised again.
+G2 (genuine) still raises no alarm.
