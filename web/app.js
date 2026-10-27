@@ -30,7 +30,12 @@
     $("callPick").appendChild(o);
   });
   $("lang").value = store.get("lang", "hi-IN");
-  $("lang").onchange = () => { store.set("lang", $("lang").value); if (rec) { stopMic(); startMic(); } };
+  $("lang").onchange = () => {
+    store.set("lang", $("lang").value);
+    if (rec) { stopMic(); startMic(); }
+    // On-device mode: tell the speech server; no need to restart the mic.
+    if (ws && ws.readyState === 1) ws.send("lang:" + $("lang").value.slice(0, 2));
+  };
 
   // ---------- tabs ----------
   document.querySelectorAll(".tab").forEach((t) => {
