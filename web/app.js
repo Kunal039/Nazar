@@ -104,7 +104,7 @@
     });
     const seen = {};
     session.reasons.forEach((x) => { (seen[x.stage] = seen[x.stage] || new Set()).add(x.phrase); });
-    $("why").innerHTML = Object.keys(seen).map((k) => "<li><b>" + STAGES[k - 1].name + ":</b> " + esc([...seen[k]].join(", ")) + "</li>").join("") || "<li>No scam signals yet.</li>";
+    $("why").innerHTML = Object.keys(seen).map((k) => "<li><span class=\"dot s" + k + "\"></span><b>" + STAGES[k - 1].name + ":</b> " + esc([...seen[k]].join(", ")) + "</li>").join("") || "<li>No scam signals yet.</li>";
     drawSpark();
     if (r.level === "danger" && !alerted) raiseAlarm(r);
   }
