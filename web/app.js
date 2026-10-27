@@ -327,6 +327,7 @@
   const stopMic = stopListening;
   // ---------- on-device speech: mic audio to the local Whisper server (server/server.py) ----------
   let ws = null, actx = null, micStream = null;
+  let retries = 0;   // automatic reconnects after the speech server drops
   const useWhisper = () => $("engine").value === "whisper";
   async function startWhisper() {
     stopPlay();
@@ -343,8 +344,10 @@
     const host = location.port === "8000" ? location.host : "localhost:8000";
     ws = new WebSocket(`${proto}://${host}/ws?lang=${encodeURIComponent($("lang").value)}`);
     ws.binaryType = "arraybuffer";
+    let opened = false;
     ws.onopen = () => {
       if (me !== run) return;
+      opened = true; retries = 0;
       actx = new AudioContext({ sampleRate: 16000 });
       const srcNode = actx.createMediaStreamSource(micStream);
       const proc = actx.createScriptProcessor(4096, 1, 1);
@@ -368,8 +371,17 @@
         if (m.text && !speakingWarning) addLine(m.text);
       }
     };
-    ws.onerror = () => { if (me === run) stopListening("No on-device speech server. Double-click start.bat, then try again."); };
-    ws.onclose = () => { if (me === run) stopListening("Speech server disconnected."); };
+    ws.onerror = () => { if (me === run && !opened) stopListening("No on-device speech server. Double-click start.bat, then try again."); };
+    ws.onclose = () => {
+      if (me !== run) return;
+      // The server dropped mid-call: try again a few times before giving up, so a hiccup does not end protection.
+      if (opened && retries < 3) {
+        retries++;
+        stopListening(`Speech server dropped, reconnecting (${retries}/3)…`);
+        const r = run;
+        setTimeout(() => { if (run === r) startWhisper(); }, 1500);   // Stop or Start in the meantime cancels this
+      } else { retries = 0; stopListening("Speech server disconnected. Double-click start.bat, then try again."); }
+    };
   }
   // Space bar starts or stops listening, unless the user is typing.
   document.addEventListener("keydown", (e) => {
