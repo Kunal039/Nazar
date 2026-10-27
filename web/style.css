@@ -238,3 +238,6 @@ kbd.hint { font: 12px/1 inherit; color: var(--muted); border: 1px solid var(--li
 .intro ol { margin: 0; padding-left: 20px; display: flex; flex-wrap: wrap; gap: 4px 28px; font-size: 15px; }
 .intro button.link { margin-left: auto; }
 @media (prefers-color-scheme: dark) { .intro { background: #33271f; } }
+
+/* Keep the score in view while the transcript grows (wide screens) */
+@media (min-width: 861px) { .card.view { position: sticky; top: 12px; align-self: start; } }
