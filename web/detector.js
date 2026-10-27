@@ -147,6 +147,11 @@
   const YOU_INDIC_SRC = "(आप|तुम|तेरा|तेरी|तुझ|ਤੁਸੀਂ|ਤੁਸੀ|ਤੁਹਾ|ਤੈਨੂੰ|ਤੇਰਾ|ਤੇਰੀ|ਆਪ)";
   const YOU = new RegExp(WORD_START + "(?:" + fold(YOU_SRC).t + WORD_END + "|" + fold(YOU_INDIC_SRC).t + ")", "iu");
   const NOT_ADDRESSED_CAP = 39;
+  // Scam awareness: a caller who warns about scams, mentions the 1930 helpline or tells you to report it
+  // is not running one (bank warnings, cyber-cell follow-ups, reporters, family retelling a scam call).
+  const AWARE_SRC = "(1930|scams?|thagi|thugi|ठगी|ठग|धोखा|ਠੱਗੀ|ਧੋਖਾ|dhokha|report (it|kariye|karein|karo|kar do)|शिकायत|ਸ਼ਿਕਾਇਤ)";
+  const AWARE = new RegExp(WORD_START + "(?:" + fold(AWARE_SRC).t + ")", "iu");
+  const AWARE_CAP = 69;
 
   function analyzeLine(text) {
     const src = String(text);
@@ -167,17 +172,18 @@
         }
       }
     }
-    return { matches, genuine, addressed: YOU.test(t) };
+    return { matches, genuine, addressed: YOU.test(t), aware: AWARE.test(t) };
   }
 
   class Session {
     constructor() { this.reset(); }
-    reset() { this.addressed = false; this.lines = []; this.conf = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }; this.first = {}; this.reasons = []; this.history = []; }
+    reset() { this.addressed = false; this.aware = false; this.lines = []; this.conf = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }; this.first = {}; this.reasons = []; this.history = []; }
     add(text) {
       const idx = this.lines.length;
       const res = analyzeLine(text);
       this.lines.push({ text, matches: res.matches, genuine: res.genuine });
       if (res.addressed) this.addressed = true;
+      if (res.aware) this.aware = true;
       for (const m of res.matches) {
         if (m.weight > this.conf[m.stage]) this.conf[m.stage] = m.weight;
         if (this.first[m.stage] === undefined) this.first[m.stage] = idx;
@@ -199,6 +205,8 @@
       let risk = Math.max(0, Math.min(100, Math.round(base + prog)));
       // Threats count only when aimed at the listener: never alarm on a call that has not said "you" yet.
       if (!this.addressed) risk = Math.min(risk, NOT_ADDRESSED_CAP);
+      // A call that shows scam awareness gets a caution at most, never the full alarm.
+      if (this.aware) risk = Math.min(risk, AWARE_CAP);
       const level = risk >= THRESHOLD ? "danger" : risk >= 40 ? "warn" : "safe";
       const stages = STAGES.filter((s) => this.conf[s.id] > 0).map((s) => s.id);
       return { risk, level, stages };
