@@ -14,6 +14,10 @@ Team: Kunal Mittal (lead), Ansh Kumar, Shivani Kumari. Code Yudh 2026 final, Cha
 | `stt-bench/` speech-to-text benchmark (Whisper sizes, CPU vs GPU, phone-quality audio) | Pre-event research, committed as-is |
 | Live on-device speech server, alert flow, false-alarm fix, final integration | Built at the venue, 27–28 Oct 2026 (see commit history) |
 
+## Privacy
+
+On-device by default, nothing recorded, call text forgotten after 30 s, wiped when listening stops; family alerts never include what was said. See [docs/privacy.md](docs/privacy.md).
+
 ## Run
 
 Open `web/index.html` in Chrome (mic needs Chrome's Web Speech API), or serve the folder:
@@ -25,7 +29,7 @@ python -m http.server 8000
 
 Tests: `node web/test.js` (detector on 55 labelled calls: 25 scam, 30 genuine), `node web/test_addressed.js`, `python server/test_cutter.py`.
 
-Docs: [architecture](docs/architecture.md), [scoring](docs/scoring.md), [FAQ](docs/faq.md). One-click start on Windows: `start.bat`.
+Docs: [privacy](docs/privacy.md), [architecture](docs/architecture.md), [scoring](docs/scoring.md), [FAQ](docs/faq.md). One-click start on Windows: `start.bat`.
 
 ## On-device speech (no internet)
 
