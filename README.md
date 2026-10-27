@@ -20,6 +20,11 @@
 </p>
 
 <p align="center">
+  <img src="docs/demo.gif" alt="Demo: a digital-arrest scam call builds up line by line; Nazar raises the alarm at line 3, before money is asked for" width="85%">
+  <br><sub>Sample call S1: the risk rises with each line and the alarm fires at line 3, before the caller asks for money.</sub>
+</p>
+
+<p align="center">
   <a href="#-the-problem">Problem</a> ·
   <a href="#-how-it-works">How it works</a> ·
   <a href="#-results">Results</a> ·
@@ -120,7 +125,8 @@ start.bat            # or: python server/server.py
 ```
 
 Chrome opens http://localhost:8000. Set the call language, press **Start listening**, and play a call on speaker
-(try [`demo-audio/S1_full.wav`](demo-audio)). Works with Wi-Fi off. Full steps: [demo guide](docs/demo-guide.md).
+(try [`demo-audio/S1_full.wav`](demo-audio)).
+Shareable demo moments: [`?call=S1&upto=3&alarm=1`](https://nazar-codevators.vercel.app/?call=S1&upto=3&alarm=1) shows the alarm on line 3. Works with Wi-Fi off. Full steps: [demo guide](docs/demo-guide.md).
 
 **Website version:** https://nazar-codevators.vercel.app, with sample calls, typed lines and browser speech (Chrome/Edge).
 
