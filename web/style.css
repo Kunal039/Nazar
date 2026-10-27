@@ -254,3 +254,9 @@ tr:has(td.ok) td.ok { color: var(--green); font-weight: 600; }
 @media (prefers-color-scheme: dark) { tr:has(td.bad) { background: #3d2219; } }
 
 .intro button.link { white-space: nowrap; }
+
+/* A+ larger text */
+button.atext { background: transparent; color: #F2C27A; border: 1px solid rgba(242,194,122,.6); border-radius: 10px; font-weight: 700; margin-left: auto; margin-right: 12px; }
+button.atext[aria-pressed="true"] { background: #F2C27A; color: var(--dk); }
+html.big { font-size: 118%; }
+html.big body, html.big .line, html.big #why, html.big .family, html.big .note, html.big button { font-size: 1.12em; }

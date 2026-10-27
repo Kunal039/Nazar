@@ -19,6 +19,11 @@
   if (store.get("introSeen", "") !== "1") $("intro").hidden = false;
   $("introClose").onclick = () => { $("intro").hidden = true; store.set("introSeen", "1"); };
 
+  // Larger text for older users; remembered on this device.
+  function setBig(on) { document.documentElement.classList.toggle("big", on); $("bigText").setAttribute("aria-pressed", on); store.set("big", on ? "1" : ""); }
+  setBig(store.get("big", "") === "1");
+  $("bigText").onclick = () => setBig(!document.documentElement.classList.contains("big"));
+
   // ---------- static bits ----------
   const STEP_HELP = [
     "Authority: the caller claims to be CBI, police, customs, a court or a bank.",
