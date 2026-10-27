@@ -25,6 +25,7 @@
 </p>
 
 <p align="center">
+  <a href="README.hi.md">हिन्दी</a> ·
   <a href="#-your-privacy-comes-first">Privacy</a> ·
   <a href="#-the-problem">Problem</a> ·
   <a href="#-how-it-works">How it works</a> ·
