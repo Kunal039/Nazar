@@ -41,11 +41,15 @@
     l.className = "s" + s.id; l.textContent = s.name;
     $("legend").appendChild(l);
   });
+  // Sample calls grouped into scam and genuine, so the list is easy to scan.
+  const groups = { scam: document.createElement("optgroup"), genuine: document.createElement("optgroup") };
+  groups.scam.label = "Scam calls"; groups.genuine.label = "Genuine calls";
   CALLS.forEach((c) => {
     const o = document.createElement("option");
-    o.value = c.id; o.textContent = (c.kind === "scam" ? "Scam: " : "Genuine: ") + c.title + " (" + c.lang + ")";
-    $("callPick").appendChild(o);
+    o.value = c.id; o.textContent = c.id + " · " + c.title + " (" + c.lang + ")";
+    groups[c.kind].appendChild(o);
   });
+  $("callPick").append(groups.scam, groups.genuine);
   $("lang").value = store.get("lang", "hi-IN");
   $("lang").onchange = () => {
     store.set("lang", $("lang").value);
