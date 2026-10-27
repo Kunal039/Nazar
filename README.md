@@ -25,6 +25,7 @@
 </p>
 
 <p align="center">
+  <a href="#-your-privacy-comes-first">Privacy</a> ·
   <a href="#-the-problem">Problem</a> ·
   <a href="#-how-it-works">How it works</a> ·
   <a href="#-results">Results</a> ·
@@ -34,6 +35,19 @@
 </p>
 
 ---
+
+## 🔒 Your privacy comes first
+
+Nazar listens to phone calls, so privacy is the rule everything is built around:
+
+- 🎙️ **Your call never leaves your device.** Speech is turned into text on your own laptop; the speech server cannot even be reached from the network.
+- 💾 **Nothing is recorded or saved.** No audio files, no transcripts. Each sentence is discarded once it has been checked.
+- ⏱️ **Nazar forgets as it goes.** After 30 seconds only scam warning words are kept; pressing Stop wipes everything.
+- 👨‍👩‍👧 **Your family is told *that* it is a scam, never *what* was said.**
+- 🚫 **No account, no ads, no tracking.**
+- ✅ **Tested, not just promised:** privacy tests run on every change and fail if any of this is broken.
+
+Full details, including the one exception (the website's optional cloud speech, used only if you choose it): **[PRIVACY.md](PRIVACY.md)**
 
 ## 🚨 The problem
 
@@ -104,7 +118,7 @@ All test calls are fictional and written by our team, so these are not real-worl
 | Wiped when the call ends | Stopping listening forgets all call text |
 | Alerts carry no conversation | Family sees risk level, steps and time, never what was said |
 
-More: [docs/privacy.md](docs/privacy.md)
+More: [PRIVACY.md](PRIVACY.md) · technical notes in [docs/privacy.md](docs/privacy.md)
 
 ## ✨ Features
 
