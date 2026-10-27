@@ -276,3 +276,9 @@ html.big body, html.big .line, html.big #why, html.big .family, html.big .note, 
 @media (prefers-color-scheme: dark) {
   .btnlink { background: #33271f; color: #f6ebe0; border-color: #8a7464; }
 }
+
+/* Dark mode: the risk number and level badge stay readable on the dark ring */
+@media (prefers-color-scheme: dark) {
+  .ring #risk { color: #f6ebe0 !important; }
+  #level { color: #1E1612 !important; }
+}
