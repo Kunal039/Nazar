@@ -8,5 +8,6 @@ Synthetic test calls made with `stt-bench/make_audio.py` (text-to-speech plus a 
 | `S11_1..6.wav` | Punjabi digital-arrest scam | Alarm before the money ask |
 | `G2_1..4.wav` | Genuine call | Stays safe |
 
-Play them in order on speaker next to the laptop, or stream them without a mic:
+**Easiest for the demo:** play `S1_full.wav`, `S11_full.wav` or `G2_full.wav` (whole call, 1.2 s pause between lines) on speaker next to the laptop.
+Or stream them without a mic:
 `python server/stream_test.py demo-audio/S1_1.wav demo-audio/S1_2.wav demo-audio/S1_3.wav --lang hi`
