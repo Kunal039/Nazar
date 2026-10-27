@@ -209,6 +209,7 @@
   function setMicUI(on, text) {
     $("micBtn").textContent = on ? "Stop listening" : "Start listening";
     $("micBtn").classList.toggle("live", on);
+    $("micBtn").setAttribute("aria-pressed", on ? "true" : "false");
     $("micState").textContent = text || (on ? "Listening" : "Microphone off");
     $("micState").classList.toggle("on", on);
   }
