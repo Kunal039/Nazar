@@ -458,6 +458,24 @@
   function closeOverlay() { dismissed = true; $("overlay").classList.remove("show"); try { speechSynthesis.cancel(); } catch (e) {} speakingWarning = false; }
   $("hangBtn").onclick = () => { closeOverlay(); stopMic(); stopPlay(); $("after").hidden = false; $("after").scrollIntoView({ behavior: "smooth" }); };
   $("afterClose").onclick = () => { $("after").hidden = true; };
+  // A short report to read out on 1930 or attach on cybercrime.gov.in. Only scam warning words, never the conversation.
+  $("saveReport").onclick = () => {
+    const r = session.score(), seen = {};
+    for (const x of session.reasons) (seen[x.stage] = seen[x.stage] || new Set()).add(x.phrase);
+    const lines = [
+      "Nazar scam-call report", "Date and time: " + new Date().toLocaleString(),
+      "Highest risk: " + Math.max(0, ...session.history) + "/100",
+      "Scam steps seen:", ...Object.keys(seen).map((k) => "  - " + STAGES[k - 1].name + ": " + [...seen[k]].join(", ")),
+      "", "What to do: call 1930 (National Cyber Crime Helpline) or report at https://cybercrime.gov.in.",
+      "Add the caller's number, any account or UPI ID they gave, and any money sent.",
+      "", "This report holds no recording and no transcript of the call."
+    ];
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([lines.join("
+")], { type: "text/plain" }));
+    a.download = "nazar-report-" + new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-") + ".txt";
+    a.click(); URL.revokeObjectURL(a.href);
+  };
   $("safeBtn").onclick = closeOverlay;
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && $("overlay").classList.contains("show")) closeOverlay(); });
 
