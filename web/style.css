@@ -282,3 +282,7 @@ html.big body, html.big .line, html.big #why, html.big .family, html.big .note, 
   .ring #risk { color: #f6ebe0 !important; }
   #level { color: #1E1612 !important; }
 }
+
+/* Theme and text-size buttons sit together */
+#themeBtn { margin-right: 8px; }
+#themeBtn + #bigText { margin-left: 0; }
