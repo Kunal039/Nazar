@@ -28,6 +28,7 @@
 
 <p align="center">
   <img src="docs/demo.gif" alt="Demo: a digital-arrest scam call builds up line by line; Nazar raises the alarm at line 3, before money is asked for" width="85%">
+  <br><b>▶️ <a href="https://nazar-codevators.vercel.app/demo.mp4">Watch the 60-second demo video (with sound)</a></b>
   <br><sub>Sample call S1: the risk rises with each line and the alarm fires at line 3, before the caller asks for money.</sub>
 </p>
 
