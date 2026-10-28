@@ -24,6 +24,22 @@
   setBig(store.get("big", "") === "1");
   $("bigText").onclick = () => setBig(!document.documentElement.classList.contains("big"));
 
+  // Light/dark switch. Dark styles live in "prefers-color-scheme: dark" blocks; switching
+  // just turns those blocks on ("all") or off ("not all"). The choice is remembered on this device.
+  const darkRules = [];
+  for (const sheet of document.styleSheets) {
+    try { for (const r of sheet.cssRules) if (r.media && /prefers-color-scheme:\s*dark/.test(r.media.mediaText)) darkRules.push(r); } catch (e) {}
+  }
+  function isDark() { const t = store.get("theme", ""); return t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; }
+  function applyTheme() {
+    const t = store.get("theme", "");
+    darkRules.forEach((r) => { r.media.mediaText = t === "dark" ? "all" : t === "light" ? "not all" : "(prefers-color-scheme: dark)"; });
+    $("themeBtn").textContent = isDark() ? "☀️" : "🌙";
+    $("themeBtn").title = isDark() ? "Switch to light mode" : "Switch to dark mode";
+  }
+  $("themeBtn").onclick = () => { store.set("theme", isDark() ? "light" : "dark"); applyTheme(); };
+  applyTheme();
+
   // ---------- static bits ----------
   const STEP_HELP = [
     "Authority: the caller claims to be CBI, police, customs, a court or a bank.",
